@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ask2</title>
+    <style>
+      body {
+        background-image: url("assets/grey.jpg");
+        background-size: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Registration Form</h1>
+    <form action="process-registration.php" method="POST">
+      <label for="username">Username:</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        required
+        pattern="[a-zA-Z][a-zA-Z0-9]{0,7}"
+      />
+      <br /><br />
+      <label for="email">Email:</label>
+      <input
+        type="text"
+        id="email"
+        name="email"
+        required
+        pattern="[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,4}"
+      />
+      <br /><br />
+      <label for="password">Password:</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        required
+        pattern="^(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,15}$"
+      />
+      <br /><br />
+      <label for="confirmPassword">Confirm Password:</label>
+      <input
+        type="password"
+        id="confirmPassword"
+        name="confirmPassword"
+        required
+        pattern="^(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,15}$"
+      />
+      <br /><br />
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </body>
+</html>
