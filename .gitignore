@@ -1,0 +1,43 @@
+# Ignore generated files
+*.min.css
+*.min.js
+*.map
+
+# Ignore Node.js and npm related files (if not using)
+node_modules/
+package-lock.json
+
+# Ignore development and text editor files
+.vscode/
+.idea/
+*.suo
+*.user
+*.sln
+Thumbs.db
+
+# Ignore log files and databases (specific to your setup)
+*.log
+*.sqlite
+*.db
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore backup and temporary files
+*.bak
+*.swp
+
+# Ignore config files with sensitive information (e.g., secrets.json)
+config.json
+
+# Ignore compiled executables
+*.exe
+
+# Ignore any local configurations you might have
+.env
+
+# Ignore build output and dependency directories
+/build/
+/dist/
+/bower_components/
