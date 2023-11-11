@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="ask2.js"></script>
+    <script src="country.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://openlayers.org/en/latest/css/ol.css"
+      type="text/css"
+    />
+    <script
+      src="https://openlayers.org/en/latest/build/ol.js"
+      type="text/javascript"
+    ></script>
+
+    <title>Ask2</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      href="node_modules/bootstrap-icons/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-image: url("assets/grey.jpg");
+        background-size: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="mt-5">Registration Form</h1>
+      <form id="registerForm">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            name="username"
+            required
+            pattern="[a-zA-Z][a-zA-Z0-9]{8,}"
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="email"
+            name="email"
+            required
+            pattern="[a-zA-Z0-9]+@[a-zA-Z0-9]+.[a-zA-Z]{2,4}"
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <div class="input-group">
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+              required
+              pattern="^(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,15}$"
+            />
+            <button class="btn btn-secondary" type="button" id="togglePassword">
+              <i id="passwordIcon" class="bi bi-eye"></i>
+            </button>
+            <button
+              class="btn btn-secondary"
+              type="button"
+              id="toggleCheckPassword"
+            >
+              <i class="bi bi-shield-check"></i>
+            </button>
+          </div>
+          <div id="passwordValidationMessage" class="text-danger"></div>
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password:</label>
+          <div class="input-group">
+            <input
+              type="password"
+              class="form-control"
+              id="confirmPassword"
+              name="confirmPassword"
+              required
+              pattern="^(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,15}$"
+            />
+            <button
+              class="btn btn-secondary"
+              type="button"
+              id="toggleConfirmPassword"
+            >
+              <i id="confirmPasswordIcon" class="bi bi-eye"></i>
+            </button>
+            <button
+              class="btn btn-secondary"
+              type="button"
+              id="toggleCheckConfirmPassword"
+            >
+              <i class="bi bi-shield-check"></i>
+            </button>
+          </div>
+          <div id="confirmPasswordValidationMessage" class="text-danger"></div>
+        </div>
+        <div class="form-group">
+          <label for="firstname">First name:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="firstname"
+            name="firstname"
+            required
+            pattern="[a-zA-Z]{3,30}"
+          />
+        </div>
+        <div class="form-group">
+          <label for="lastname">Last name:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="lastname"
+            name="lastname"
+            required
+            pattern="[a-zA-Z]{3,30}"
+          />
+        </div>
+        <div class="form-group">
+          <label for="birthdate">Date of Birth:</label>
+          <input
+            type="date"
+            class="form-control"
+            id="birthdate"
+            name="birthdate"
+            required
+            min="1920-01-01"
+            max="2007-12-31"
+          />
+        </div>
+        <div class="form-group">
+          <label for="gender">Gender:</label>
+          <select class="form-control" id="gender" name="gender" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="type">User type:</label>
+          <select class="form-control" id="type" name="type" required>
+            <option value="owner">Pet Owner</option>
+            <option value="keeper">Pet Keeper</option>
+          </select>
+        </div>
+        <div class="keeper">
+          <div class="form-group">
+            <label for="space-type">Space type:</label>
+            <select class="form-control" id="space-type" name="space-type" required>
+              <option value="indoor">Indoor</option>
+              <option value="outdoor">Outdoor</option>
+              <option value="both">Both</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value="cat"
+                id="cat"
+                name="cat"
+              />
+              <label for="cat" id="catLabel"> Cat </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value="dog"
+                id="dog"
+                name="dog"
+              />
+              <label class="form-check-label" for="dog"> Dog </label>
+            </div>
+          </div>
+          <div class="catPrice" style="display: none">
+            <div class="form-group">
+              <label for="cat-price">Cat price:</label>
+              <input
+                type="number"
+                class="form-control"
+                id="cat-price"
+                name="cat-price"
+                min="0"
+                max="15"
+                value="8"
+              />
+            </div>
+          </div>
+          <div class="dogPrice" style="display: none">
+            <div class="form-group">
+              <label for="dog-price">Dog price:</label>
+              <input
+                type="number"
+                class="form-control"
+                id="dog-price"
+                name="dog-price"
+                min="0"
+                max="15"
+                value="8"
+              />
+            </div>
+          </div>
+          <div class="spaceDescription">
+            <div class="form-group">
+              <label for="space-description">Space description:</label>
+              <textarea
+                class="form-control"
+                id="space-description"
+                name="space-description"
+                rows="3"
+                pattern="[a-zA-Z0-9]{10,150}"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="country">Country:</label>
+          <iframe
+            src="assets/country-names.html"
+            id="countryIframe"
+            class="form-control"
+          ></iframe>
+        </div>
+        <div class="form-group">
+          <label for="city">City:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="city"
+            name="city"
+            required
+            pattern="[a-zA-Z]{3,30}"
+          />
+        </div>
+        <div class="form-group">
+          <label for="address">Address:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="address"
+            name="address"
+            required
+            pattern="[a-zA-Z0-9\s]{5,150}"
+          />
+          <button class="btn btn-secondary" type="button" id="toggleMap">
+            <i id="mapIcon" class="bi bi-compass"></i>
+          </button>
+          <label for="mapIcon" class="col-form-label"
+            >Check if the country/town/address exist
+          </label>
+          <div id="mapValidationMessage" class="text-danger"></div>
+        </div>
+        <div id="showMap" style="display: none;">
+          <button
+            class="btn btn-secondary"
+            type="button"
+            id="createMap"
+          >
+            <i class="bi bi-geo-alt"></i>
+          </button>
+          <label for="mapIcon" class="col-form-label"
+            >Show address on map
+          </label>
+        </div>
+        <div class="form-group">
+          <label for="website">Website URL:</label>
+          <input
+            type="url"
+            class="form-control"
+            id="personalpage"
+            name="personalpage"
+          />
+        </div>
+        <div class="form-group">
+          <label for="job">Job:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="job"
+            name="job"
+            pattern="[a-zA-Z]{3,30}"
+          />
+        </div>
+        <div class="form-group">
+          <label for="telephone">Phone:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="telephone"
+            name="telephone"
+            pattern="[0-9]{10,14}"
+          />
+        </div>
+        <div id="Map" style="height: 600px; width: 700px; display: none"></div>
+        <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+        <button type="submit" class="btn btn-primary" id="submit-button">
+          Submit
+        </button>
+      </form>
+    </div>
+  </body>
+</html>
