@@ -10,7 +10,7 @@ Giorgos Stivaktakis / csd4300
 npm install
 
 ### run
-open **ask2.html** in browser
-localhost is preferred
+open **ask2.html** in browser  
+localhost is preferred  
 python -m http.server <port>
 
