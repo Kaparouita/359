@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="myStyle.css" />
+    <script src="player.js"></script>
+    <script src="initBoard.js"></script>
+    <script src="game.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body onload="initBoard()">
+    <table id="mainTable"></table>
+    <br />
+    <div class="container mt-5">
+      <div class="card">
+        <div class="card-header">Player Turn Information</div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card-text">
+                <h5 class="card-title">
+                  Current Player: <span id="playerName">[Player Name]</span>
+                </h5>
+                <p class="card-text">
+                  Current Player Position:
+                  <span id="playerPosition">[Player Position]</span>
+                </p>
+                <p class="card-text">
+                  Has September effect:
+                  <span id="playerSeptember">[Player September]</span>
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <img id="dice" src="" width="50" height="50" class="mb-3" />
+              <button
+                width="70"
+                height="25"
+                onclick="rollDice()"
+                class="btn btn-primary btn-sm"
+              >
+                Roll Dice
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
