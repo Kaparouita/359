@@ -3,7 +3,9 @@ class Player {
         this.name = name;
         this.position = position;
         this.september = false;
+        this.sword = false;
         this.color = color;
+        this.firstTurn = true;
     }
 
 	updatePlayerInfo() {
@@ -20,12 +22,6 @@ class Player {
         else{
             document.getElementById("position"+oldPosition).innerHTML="<img  src='images/"+oldPosition+".png'  height=70 width=80></div>";
             document.getElementById("position"+this.position).innerHTML="<img  src='imagesBoth/"+this.position+".png'  height=70 width=80></div>";
-        }
-    }
-
-    changePositionGuiFirstTurn(){
-        if (this.position !== 0){
-            document.getElementById("position"+this.position).innerHTML="<img  src='images"+this.color+"/"+this.position+".png'  height=70 width=80></div>";
         }
     }
 

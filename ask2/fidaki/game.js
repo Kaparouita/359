@@ -5,8 +5,10 @@ var currentPlayer ;
 var firstTurn = true;
 
 function initPlayers(){
-  player1 = new Player("Player 1",0,"Red");
-  player2 = new Player("Player 2",0,"White");
+  player1 = new Player("Player 1",1,"Red");
+  player2 = new Player("Player 2",1,"White");
+
+  // set the first player randomly
   random = Math.floor(Math.random() * 2) ;
   random === 0 ? currentPlayer = player1 : currentPlayer = player2;
   currentPlayer.updatePlayerInfo();
@@ -55,60 +57,86 @@ function setPositions() {
   return positions;
 }
 
+// dice images
 var dices = ["imagesDice/one.png", "imagesDice/two.png", "imagesDice/three.png", "imagesDice/four.png", "imagesDice/five.png", "imagesDice/six.png"];
 function changeDice(diceNumber) {
 	document.getElementById("dice").src = dices[diceNumber-1];
 }
 
+// get the current player
 function getPlayerTurn(){
   return currentPlayer;
 }
 
+// roll the dice
 function rollDice() {
-	var diceNumber = 3//Math.floor(Math.random() * 6) + 1;
+	var diceNumber = Math.floor(Math.random() * 6) + 1;
   changeDice(diceNumber);
 	return diceNumber;
 }
 
+// play the turn when the roll button is clicked
 function play(){
   var diceNumber = rollDice();
   together = player1.position === player2.position;
+  player  = getPlayerTurn();
+  if (player.firstTurn) {
+    player.firstTurn = false;
+    diceNumber -= 1;
+    together = false;
+  }
 
   // keep the old position
-  oldPosition = getPlayerTurn().position;
-  getPlayerTurn().changePosition(getPlayerTurn().position + diceNumber);
+  oldPosition = player.position;
+  player.changePosition(player.position + diceNumber);
 
-  if (hasWon(oldPosition)){
-    endGame();
+  if (hasWon(player,oldPosition)){
     return;
   }
-  
+
   // if the new position is a snake or a ladder
-  if (cells[getPlayerTurn().position].type === "Snake") {
-    (getPlayerTurn().september) ? september(true) : getPlayerTurn().changePosition(cells[getPlayerTurn().position].to);
-  }
-  else if(cells[getPlayerTurn().position].type === "Ladders"){
-    getPlayerTurn().changePosition(cells[getPlayerTurn().position].to);
-  }
-  else if(cells[getPlayerTurn().position].type === "Snake or Ladders"){
-    var random = Math.floor(Math.random() * 10) ;
-    if(random < 5){
-      document.getElementById("gameMessage").innerHTML = "[Ladder or Snake] "+getPlayerTurn().name+" failed the exam with a " + random;
-      (getPlayerTurn().september) ? september(false) : getPlayerTurn().changePosition(cells[getPlayerTurn().position].to[0]);
-    }else{
-      document.getElementById("gameMessage").innerHTML = "[Ladder or Snake] "+getPlayerTurn().name+" passed the exam with a " + random;
-      getPlayerTurn().changePosition(cells[getPlayerTurn().position].to[1]);
-    }
-  }
-  else if(cells[getPlayerTurn().position].type === "September"){
-    getPlayerTurn().september = true;
-    document.getElementById("gameMessage").innerHTML = "[September] "+getPlayerTurn().name+" has entered September";
-  }
-	  
+  swordPlayer = checkTile(player);
+
   updateGui(oldPosition);
   updatePlayerTurn(diceNumber,together);
+  (swordPlayer) ? sword(swordPlayer) : null;
+
 }
 
+// check if the new position is a snake or a ladder or a snake or ladder
+function checkTile(player){
+  if (cells[player.position].type === "Snake") {
+    document.getElementById("gameMessage").innerHTML = "[Snake] "+player.name+" has entered a snake";
+    (player.september) ? september(true) : player.changePosition(cells[player.position].to);
+  }
+  else if(cells[player.position].type === "Ladders"){
+    player.changePosition(cells[player.position].to);
+    document.getElementById("gameMessage").innerHTML = "[Ladder] "+player.name+" has entered a ladder";
+  }
+  else if(cells[player.position].type === "Snake or Ladders"){
+    var random = Math.floor(Math.random() * 10) ;
+    if(random < 5){
+      document.getElementById("gameMessage").innerHTML = "[Ladder or Snake] "+player.name+" failed the exam with a " + random;
+      (player.september) ? september(false) : player.changePosition(cells[player.position].to[0]);
+    }else{
+      document.getElementById("gameMessage").innerHTML = "[Ladder or Snake] "+player.name+" passed the exam with a " + random;
+      player.changePosition(cells[player.position].to[1]);
+      (hasWon(player,player.position)) ? null : checkTile(player);
+    }
+  }
+  else if(cells[player.position].type === "September"){
+    player.september = true;
+    document.getElementById("gameMessage").innerHTML = "[September] "+player.name+" has entered September";
+  }
+  else if(cells[player.position].type === "Swords"){
+    document.getElementById("gameMessage").innerHTML = "[Swords] "+player.name+" has entered Swords the opponent will be sent back 10 spaces";
+    player.sword = true;
+    return player;
+  }
+  return null;
+}
+
+// update the player turn
 function updatePlayerTurn(diceNumber,together){
   currentPlayer = getPlayerTurn() === player1 ? player2 : player1;
   getPlayerTurn().updatePlayerInfo();
@@ -122,19 +150,22 @@ function updatePlayerTurn(diceNumber,together){
   }
 }
 
-function hasWon(oldPosition){
-  if (getPlayerTurn().position < 90) {
+// check if the player has won
+function hasWon(player,oldPosition){
+  if (player.position < 90) {
     return false;
   }
-  else if (getPlayerTurn().position === 90) {
-    document.getElementById("playerMessage").innerHTML = getPlayerTurn().name+" has won";
-    alert(getPlayerTurn().name+" has won!");
+  else if (player.position === 90) {
+    document.getElementById("playerMessage").innerHTML = player.name+" has won";
+    alert(player.name+" has won!");
+    updateGui(oldPosition);
+    endGame();
     return true;
   }
   else {
-    var dice = (getPlayerTurn().position - oldPosition);
-    getPlayerTurn().changePosition((90 - dice) + (90 - oldPosition));
-    document.getElementById("gameMessage").innerHTML = getPlayerTurn().name+" did not roll the exact number to win";
+    var dice = (player.position - oldPosition);
+    player.changePosition((90 - dice) + (90 - oldPosition));
+    document.getElementById("gameMessage").innerHTML = player.name+" did not roll the exact number to win";
     return false;
   }
 }
@@ -152,11 +183,30 @@ function september(snake){
   }
 }
 
+// if the player is on a sword, then the opponent is sent back 10 spaces
+function sword(inputPlayer){
+  player = inputPlayer === player1 ? player2 : player1;
+
+  oldPosition = player.position;
+  newPosition = player.position - 10;
+  if(newPosition < 1){
+    newPosition = 1;
+  }
+  player.changePosition(newPosition);
+
+  swordPlayer = checkTile(player);
+
+  updateGui(oldPosition);
+  (swordPlayer) ? sword(swordPlayer) : null;
+}
+
+// end the game
 function endGame(){
   document.getElementById("gameMessage").innerHTML = "Game Over";
   document.getElementById("playButton").disabled = true;
 }
 
+//  update the gui
 function updateGui(oldPosition){
 	alone = player1.position !== player2.position;
 	getPlayerTurn().changePositionGui(oldPosition,alone);
