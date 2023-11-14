@@ -22,6 +22,13 @@ class Player {
             document.getElementById("position"+this.position).innerHTML="<img  src='imagesBoth/"+this.position+".png'  height=70 width=80></div>";
         }
     }
+
+    changePositionGuiFirstTurn(){
+        if (this.position !== 0){
+            document.getElementById("position"+this.position).innerHTML="<img  src='images"+this.color+"/"+this.position+".png'  height=70 width=80></div>";
+        }
+    }
+
     changePosition(newPosition){
         this.position = newPosition;
     }
