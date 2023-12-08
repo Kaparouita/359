@@ -9,7 +9,7 @@
   </head>
   <body>
     <!-- Country names and Country Name -->
-<select class="form-select" id="country" name="country">
+<select class="form-select" (change)="selectCountry()" [(ngModel)]="selectedCountry">
     <option value="">country</option>
     <option value="Afghanistan">Afghanistan</option>
     <option value="Aland Islands">Aland Islands</option>
@@ -266,3 +266,4 @@
 </select>
   </body>
 </html>
+

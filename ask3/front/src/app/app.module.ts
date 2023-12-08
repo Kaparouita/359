@@ -12,6 +12,8 @@ import { CardModule } from 'primeng/card';
 import { PasswordModule } from 'primeng/password';
 import { FormsModule } from '@angular/forms';
 import { DataViewModule } from 'primeng/dataview';
+import { MapComponent } from './register/map/map.component';
+import { CountriesComponent } from './register/map/countries/countries.component';
 
 
 
@@ -20,6 +22,8 @@ import { DataViewModule } from 'primeng/dataview';
   declarations: [
     AppComponent,
     RegisterComponent,
+    MapComponent,
+    CountriesComponent
   ],
   imports: [
     BrowserModule,

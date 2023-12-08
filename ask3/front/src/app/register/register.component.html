@@ -26,7 +26,7 @@
   <body>
     <div class="container">
       <h1 class="mt-5">Registration Form</h1>
-      <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+      <form #registerForm="ngForm" (ngSubmit)="onSubmit()">
         <!-- Username -->
         <div class="form-group">
           <label for="username">Username *:</label>
@@ -91,7 +91,13 @@
               </button>
             </div>
           </div>
-          <div *ngIf="passwordValidationMessage" [ngClass]="{'text-danger': passwordInvalid, 'text-success': !passwordInvalid}" >
+          <div
+            *ngIf="passwordValidationMessage"
+            [ngClass]="{
+              'text-danger': passwordInvalid,
+              'text-success': !passwordInvalid
+            }"
+          >
             {{ passwordValidationMessage }}
           </div>
         </div>
@@ -99,29 +105,39 @@
         <!-- Confirm Password -->
         <div class="form-group">
           <label for="confirmPassword">Confirm Password *:</label>
-          <input
-            [type]="showConfirmPassword ? 'text' : 'password'"
-            class="form-control"
-            id="confirmPassword"
-            name="confirmPassword"
-            [(ngModel)]="confirmPassword"
-            required
-            pattern="^(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,15}$"
-          />
-          <div class="input-group-append">
-            <button
-              class="btn btn-outline-secondary"
-              type="button"
-              (click)="toggleConfirmPasswordVisibility()"
-            >
-              <i
-                class="bi"
-                [class.bi-eye]="!showPassword"
-                [class.bi-eye-slash]="showPassword"
-              ></i>
-            </button>
+          <div class="input-group">
+            <input
+              [type]="showConfirmPassword ? 'text' : 'password'"
+              class="form-control"
+              id="confirmPassword"
+              name="confirmPassword"
+              [(ngModel)]="confirmPassword"
+              required
+              pattern="^(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,15}$"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary"
+                type="button"
+                (click)="toggleConfirmPasswordVisibility()"
+              >
+                <i
+                  class="bi"
+                  [class.bi-eye]="!showConfirmPassword"
+                  [class.bi-eye-slash]="showConfirmPassword"
+                ></i>
+              </button>
+            </div>
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary"
+                type="button"
+                (click)="checkPassword()"
+              >
+                <i class="bi bi-shield-check"></i>
+              </button>
+            </div>
           </div>
-          <!-- Confirm Password Toggle Buttons and Validation Message -->
         </div>
         <div class="form-group">
           <label for="firstname">First name *:</label>
@@ -195,7 +211,6 @@
             <option value="keeper">Pet Keeper</option>
           </select>
         </div>
-        !-- Keeper-specific Section (conditional rendering) -->
         <div *ngIf="type === 'keeper'" class="keeper">
           <div class="form-group">
             <label for="spaceType">Space type *:</label>
@@ -211,12 +226,97 @@
               <option value="both">Both</option>
             </select>
           </div>
-          <!-- Cat and Dog checkboxes with price inputs -->
-          <!-- Space Description -->
+
+          <div class="form-group" *ngIf="type === 'keeper'">
+            <div class="form-check" *ngIf="spaceType !== 'outdoor'">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="cat"
+                name="cat"
+                [(ngModel)]="hasCat"
+                (change)="catCheckboxChange()"
+              />
+              <label for="cat">Cat</label>
+            </div>
+
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="dog"
+                name="dog"
+                [(ngModel)]="hasDog"
+                (change)="dogCheckboxChange()"
+              />
+              <label for="dog">Dog</label>
+            </div>
+
+            <div *ngIf="hasCat && spaceType !== 'outdoor'">
+              <div class="form-group">
+                <label for="catPrice">Cat price *:</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="catPrice"
+                  name="catPrice"
+                  min="0"
+                  max="15"
+                  [(ngModel)]="catPrice"
+                />
+              </div>
+            </div>
+
+            <div *ngIf="hasDog">
+              <div class="form-group">
+                <label for="dogPrice">Dog price *:</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="dogPrice"
+                  name="dogPrice"
+                  min="0"
+                  max="15"
+                  [(ngModel)]="dogPrice"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="spaceDescription">Space description:</label>
+              <textarea
+                class="form-control"
+                id="spaceDescription"
+                name="spaceDescription"
+                rows="3"
+                [(ngModel)]="spaceDescription"
+              ></textarea>
+            </div>
+          </div>
         </div>
 
-        <!-- Country, City, Address -->
-        <!-- Implementing iframe might require different approach in Angular -->
+        <div class="form-group">
+          <label for="country">Country *:</label>
+          <app-countries (countryChange)="onCountrySelected($event)"></app-countries>
+        </div>
+        
+        <div class="form-group">
+          <label for="city">City *:</label>
+          <input type="text" class="form-control" id="city" name="city" [(ngModel)]="city" required pattern="[a-zA-Z]{3,30}" />
+        </div>
+        
+        <div class="form-group">
+          <label for="address">Address *:</label>
+          <input type="text" class="form-control" id="address" name="address" [(ngModel)]="address" required pattern="[a-zA-Z0-9\s]{5,150}" />
+          <!-- <button class="btn btn-secondary" type="button" (click)="toggleMap()">
+            <i class="bi bi-compass"></i>
+          </button>
+          <label class="col-form-label">Check if the country/town/address exist</label>
+          <div *ngIf="showMapValidationMessage" class="text-danger">{{ mapValidationMessage }}</div> -->
+        </div>
+        
+        <!-- <app-map  (onMap)="onMap($event)"></app-map> -->
+        
 
         <!-- Website URL -->
         <div class="form-group">
