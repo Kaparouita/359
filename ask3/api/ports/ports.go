@@ -9,34 +9,49 @@ import (
 type Service interface {
 	InitFunction() error
 
-	Register(user *domain.User) *domain.User
-	GetUsers() ([]domain.User, error)
-	UpdateUser(user *domain.User) *domain.User
-	GetUser(user *domain.User) *domain.User
-	DeleteUser(user *domain.User) *domain.Response
-	GetUserPerType(group string) ([]domain.UserPerType, *domain.Response)
+	RegisterOwner(user *domain.Owner) *domain.Owner
+	GetOwners() ([]domain.Owner, error)
+	UpdateOwner(owner *domain.Owner) *domain.Owner
+	GetOwner(owner *domain.Owner) *domain.Owner
+	DeleteOwner(owner *domain.Owner) *domain.Response
 
-	Login(login *domain.LoginResp) *domain.User
+	RegisterKeeper(user *domain.Keeper) *domain.Keeper
+	GetKeepers() ([]domain.Keeper, error)
+	UpdateKeeper(keeper *domain.Keeper) *domain.Keeper
+	GetKeeper(keeper *domain.Keeper) *domain.Keeper
+	DeleteKeeper(keeper *domain.Keeper) *domain.Response
+
+	Login(cred *domain.LoginResp) *domain.LoginResp
 }
 
 type Db interface {
-	SaveUser(user *domain.User) error
-	GetUsers() ([]domain.User, error)
-	UpdateUser(user *domain.User) error
-	GetUser(user *domain.User) error
-	DeleteUser(user *domain.User) error
-	GetUserPerUserType(groupField string) ([]domain.UserPerType, error)
+	SaveOwner(owner *domain.Owner) error
+	GetOwners() ([]domain.Owner, error)
+	UpdateOwner(owner *domain.Owner) error
+	GetOwner(owner *domain.Owner) error
+	DeleteOwner(owner *domain.Owner) error
 
-	Login(login *domain.LoginResp) (*domain.User, error)
+	SaveKeeper(keeper *domain.Keeper) error
+	GetKeepers() ([]domain.Keeper, error)
+	UpdateKeeper(keeper *domain.Keeper) error
+	GetKeeper(keeper *domain.Keeper) error
+	DeleteKeeper(keeper *domain.Keeper) error
+
+	Login(cred *domain.LoginResp) error
 }
 
 type Handler interface {
-	Register(c *fiber.Ctx) error
-	UpdateUser(c *fiber.Ctx) error
-	GetUser(c *fiber.Ctx) error
-	GetUsers(c *fiber.Ctx) error
-	DeleteUser(c *fiber.Ctx) error
-	GetUsersPerType(c *fiber.Ctx) error
+	RegisterOwner(c *fiber.Ctx) error
+	UpdateOwner(c *fiber.Ctx) error
+	GetOwner(c *fiber.Ctx) error
+	GetOwners(c *fiber.Ctx) error
+	DeleteOwner(c *fiber.Ctx) error
+
+	RegisterKeeper(c *fiber.Ctx) error
+	UpdateKeeper(c *fiber.Ctx) error
+	GetKeeper(c *fiber.Ctx) error
+	GetKeepers(c *fiber.Ctx) error
+	DeleteKeeper(c *fiber.Ctx) error
 
 	Login(c *fiber.Ctx) error
 }

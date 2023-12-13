@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { InputTextModule } from 'primeng/inputtext';
-import { CountriesComponent } from './map/countries/countries.component';
-import { MapComponent } from './map/map.component';
+import { UserServiceService } from '../services/user-service.service';
+import { User } from '../models/user.model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-register',
@@ -10,7 +10,8 @@ import { MapComponent } from './map/map.component';
   styleUrl: './register.component.css',
 })
 export class RegisterComponent {
-  constructor(private router: Router) {}
+  constructor(private userService : UserServiceService,private router : Router,private datePipe: DatePipe) {}
+
 
   username: string = '';
   email: string = '';
@@ -22,7 +23,7 @@ export class RegisterComponent {
   spaceType: string = '';
   gender: string = '';
   type: string = ''; // keeper or owner
-  country: string = '';
+  country: string = 'Greece';
   city: string = '';
   address: string = '';
   personalpage: string = '';
@@ -41,6 +42,8 @@ export class RegisterComponent {
   spaceDescription: string = '';
 
   showMap: boolean = false;
+  lat: number = 1006;  
+  lon: number = 1966; // default values
 
   //----------------------VALIDATION----------------------//
 
@@ -85,20 +88,6 @@ export class RegisterComponent {
   //     }
   //   });
 
-  //   const catLabel = document.getElementById("catLabel");
-  //   const spaceType = document.getElementById("space-type");
-  //   spaceType.addEventListener("change", function() {
-  //     if (!checkSpaceType(spaceType.value)) {
-  //       catPrice.style.display = "none";
-  //       catCheckbox.style.display = "none";
-  //       catLabel.style.display = "none";
-  //     }
-  //     else {
-  //       catCheckbox.style.display = "block";
-  //       catLabel.style.display = "block";
-  //     }
-  //   });
-  // });
 
   checkPassword() {
     const { message, valid } = this.validatePassword(
@@ -174,8 +163,8 @@ export class RegisterComponent {
     return { message: 'Password is medium', valid: 'warning' };
   }
 
-  toggleKeeperVisibility(condition: boolean) {
-    var keeperElements = document.getElementsByClassName('keeper');
+  // toggleKeeperVisibility(condition: boolean) {
+  //   var keeperElements = document.getElementsByClassName('keeper');
 
     // Loop through all elements with class 'keeper'
     // for (var i = 0; i < keeperElements.length; i++) {
@@ -185,6 +174,12 @@ export class RegisterComponent {
     //     keeperElements[i].style.display = "none"; // Hide
     //   }
     // }
+  // }
+
+  formatDate(date: Date): string {
+    let formatBirthday = this.datePipe.transform(date, 'yyyy-MM-ddTHH:mm:ssZZZZZ');
+
+      return formatBirthday as string;
   }
 
   checkSpaceType(space: string) {
@@ -196,8 +191,52 @@ export class RegisterComponent {
 
   ngOnInit(): void {}
 
+  saveUser() {
+    //format birthday
+    let formatBirthday = this.formatDate(this.birthdate);
+    console.log(this.country);
+
+    const user = new User(this.username,this.email,this.password,this.firstname,this.lastname,formatBirthday,this.gender,this.type,this.country,
+    this.city,this.address,this.personalpage,this.job,this.phone,this.lat,this.lon);
+
+
+    if (this.type === 'keeper') {
+      user.space_type = this.spaceType;
+      user.cat_keep = this.hasCat;
+      user.dog_keep = this.hasDog;
+      user.cat_price = this.catPrice;
+      user.dog_price = this.dogPrice;
+      user.space_desc = this.spaceDescription;
+
+      this.userService.saveKeeper(user).subscribe(
+        (data) => {
+          console.log(data);
+        },
+        (error) => console.log(error)
+      );
+    }else if (this.type === 'owner'){
+
+      this.userService.saveOwner(user).subscribe(
+        (data) => {
+          console.log(data);
+        },
+        (error) => console.log(error)
+      );
+    }
+  }
+
+  
+
   onSubmit() {
     console.log('register form submitted');
+    if (this.validateForm()) {
+      this.saveUser();
+      console.log('valid form');
+      //this.router.navigate(['/login']);
+    }
+    else{
+      console.log('invalid form');
+    }
 
     //this.router.navigate(['/login']);
   }

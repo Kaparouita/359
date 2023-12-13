@@ -28,12 +28,20 @@ func (server *Server) Initialize() {
 	login.Post("/", server.handler.Login)
 
 	users := app.Group("/users")
-	users.Get("/", server.handler.GetUsers)
-	users.Get("/perType", server.handler.GetUsersPerType)
-	users.Post("/", server.handler.Register)
-	users.Put("/:id", server.handler.UpdateUser)
-	users.Get("/:id", server.handler.GetUser)
-	users.Delete("/:id", server.handler.DeleteUser)
+
+	owners := users.Group("/owners")
+	owners.Get("/", server.handler.GetOwners)
+	owners.Post("/", server.handler.RegisterOwner)
+	owners.Put("/:id", server.handler.UpdateOwner)
+	owners.Get("/:id", server.handler.GetOwner)
+	owners.Delete("/:id", server.handler.DeleteOwner)
+
+	keepers := users.Group("/keepers")
+	keepers.Get("/", server.handler.GetKeepers)
+	keepers.Post("/", server.handler.RegisterKeeper)
+	keepers.Put("/:id", server.handler.UpdateKeeper)
+	keepers.Get("/:id", server.handler.GetKeeper)
+	keepers.Delete("/:id", server.handler.DeleteKeeper)
 
 	log.Fatal(app.Listen(":3000"))
 }

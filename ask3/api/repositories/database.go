@@ -17,7 +17,10 @@ type Db struct {
 }
 
 func NewDbRepo() *Db {
-	db, _ := connectDb()
+	db, err := connectDb()
+	if err != nil {
+		log.Fatal(err)
+	}
 	return &Db{
 		db,
 	}
@@ -38,8 +41,9 @@ func connectDb() (*gorm.DB, error) {
 
 	//Create the tables
 	db.AutoMigrate(
-		&domain.Order{},
-		&domain.User{},
+		// &domain.Order{},
+		&domain.Owner{},
+		&domain.Keeper{},
 	)
 	return db, nil
 }

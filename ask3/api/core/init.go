@@ -22,16 +22,24 @@ func (srv *Service) InitFunction() error {
 }
 
 func (srv *Service) InitUsers() error {
-	users := GetStartingUsers()
-	for _, user := range users {
-		err := srv.db.SaveUser(&user)
-		if err != nil {
-			continue
-		}
+	user1 := &domain.Owner{
+		Id:       1,
+		Username: "user1",
+		Email:    "user1@example.com",
 	}
-	return nil
-}
 
-func GetStartingUsers() []domain.User {
-	return []domain.User{}
+	user2 := &domain.Keeper{
+		Id:       2,
+		Username: "user2",
+		Email:    "user2@example.com",
+	}
+
+	// Save user1 and user2 to the database using srv.db
+	err := srv.db.SaveOwner(user1)
+	if err != nil {
+		return err
+	}
+	srv.db.SaveKeeper(user2)
+
+	return nil
 }

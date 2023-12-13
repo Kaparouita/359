@@ -14,6 +14,10 @@ import { FormsModule } from '@angular/forms';
 import { DataViewModule } from 'primeng/dataview';
 import { MapComponent } from './register/map/map.component';
 import { CountriesComponent } from './register/map/countries/countries.component';
+import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+import { LoginComponent } from './main-container/login/login.component';
+import { HomeComponent } from './main-container/home/home.component';
 
 
 
@@ -23,7 +27,9 @@ import { CountriesComponent } from './register/map/countries/countries.component
     AppComponent,
     RegisterComponent,
     MapComponent,
-    CountriesComponent
+    CountriesComponent,
+    LoginComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,9 +41,11 @@ import { CountriesComponent } from './register/map/countries/countries.component
     CardModule,
     PasswordModule,
     FormsModule,
-    DataViewModule
+    DataViewModule,
+    HttpClientModule,
+    
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

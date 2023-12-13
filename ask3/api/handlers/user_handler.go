@@ -4,6 +4,7 @@ import (
 	"359/domain"
 	"359/ports"
 	"encoding/json"
+	"fmt"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -18,23 +19,23 @@ func NewHandler(srv ports.Service) *Handler {
 	}
 }
 
-func (handler *Handler) Register(c *fiber.Ctx) error {
-	user := &domain.User{}
+func (handler *Handler) RegisterOwner(c *fiber.Ctx) error {
+	user := &domain.Owner{}
 	err := json.Unmarshal(c.Body(), &user)
 	if err != nil {
-		return c.SendStatus(fiber.StatusBadRequest)
+		return c.Status(fiber.StatusBadRequest).JSON("Unable to register user")
 	}
 
-	resp := handler.Srv.Register(user)
-	if err != nil {
+	resp := handler.Srv.RegisterOwner(user)
+	if resp.StatusCode != 200 {
 		return c.Status(resp.StatusCode).JSON(resp.Message)
 	}
 
 	return c.SendStatus(resp.StatusCode)
 }
 
-func (handler *Handler) UpdateUser(c *fiber.Ctx) error {
-	user := &domain.User{}
+func (handler *Handler) UpdateOwner(c *fiber.Ctx) error {
+	user := &domain.Owner{}
 	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.SendStatus(fiber.StatusBadRequest)
@@ -46,64 +47,23 @@ func (handler *Handler) UpdateUser(c *fiber.Ctx) error {
 	}
 	user.Id = uint(id)
 
-	resp := handler.Srv.UpdateUser(user)
-	if err != nil {
+	resp := handler.Srv.UpdateOwner(user)
+	if resp.StatusCode != 201 {
 		return c.Status(resp.StatusCode).JSON(resp.Message)
 	}
 
 	return c.SendStatus(resp.StatusCode)
 }
 
-func (handler *Handler) GetUser(c *fiber.Ctx) error {
-	user := &domain.User{}
+func (handler *Handler) GetOwner(c *fiber.Ctx) error {
+	user := &domain.Owner{}
 	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
 	user.Id = uint(id)
 
-	resp := handler.Srv.GetUser(user)
-	if err != nil {
-		return c.Status(resp.StatusCode).JSON(resp.Message)
-	}
-
-	return c.Status(resp.StatusCode).JSON(resp)
-}
-
-func (handler *Handler) GetUsers(c *fiber.Ctx) error {
-	users, err := handler.Srv.GetUsers()
-	if err != nil {
-		return c.Status(404).JSON("Unable to retrieve Users")
-	}
-
-	return c.Status(200).JSON(users)
-}
-
-func (handler *Handler) DeleteUser(c *fiber.Ctx) error {
-	user := &domain.User{}
-	id, err := c.ParamsInt("id")
-	if err != nil {
-		return c.SendStatus(fiber.StatusBadRequest)
-	}
-	user.Id = uint(id)
-
-	resp := handler.Srv.DeleteUser(user)
-	if err != nil {
-		return c.Status(resp.StatusCode).JSON(resp.Message)
-	}
-
-	return c.Status(resp.StatusCode).JSON(resp.Message)
-}
-
-func (handler *Handler) Login(c *fiber.Ctx) error {
-	login := &domain.LoginResp{}
-
-	err := json.Unmarshal(c.Body(), &login)
-	if err != nil {
-		return c.SendStatus(fiber.StatusBadRequest)
-	}
-
-	resp := handler.Srv.Login(login)
+	resp := handler.Srv.GetOwner(user)
 	if resp.StatusCode != 200 {
 		return c.Status(resp.StatusCode).JSON(resp.Message)
 	}
@@ -111,13 +71,121 @@ func (handler *Handler) Login(c *fiber.Ctx) error {
 	return c.Status(resp.StatusCode).JSON(resp)
 }
 
-func (handler *Handler) GetUsersPerType(c *fiber.Ctx) error {
-	group := c.Query("group", "user_type")
+func (handler *Handler) GetOwners(c *fiber.Ctx) error {
+	users, err := handler.Srv.GetOwners()
+	if err != nil {
+		return c.Status(404).JSON("Unable to retrieve Users")
+	}
 
-	users, resp := handler.Srv.GetUserPerType(group)
-	if resp.StatusCode == 400 {
+	return c.Status(200).JSON(users)
+}
+
+func (handler *Handler) DeleteOwner(c *fiber.Ctx) error {
+	user := &domain.Owner{}
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+	user.Id = uint(id)
+
+	resp := handler.Srv.DeleteOwner(user)
+	if resp.StatusCode != 200 {
 		return c.Status(resp.StatusCode).JSON(resp.Message)
 	}
 
-	return c.Status(resp.StatusCode).JSON(users)
+	return c.Status(resp.StatusCode).JSON(resp.Message)
+}
+
+func (handler *Handler) RegisterKeeper(c *fiber.Ctx) error {
+	user := &domain.Keeper{}
+	err := json.Unmarshal(c.Body(), &user)
+	if err != nil {
+		fmt.Println(err)
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+
+	resp := handler.Srv.RegisterKeeper(user)
+	if resp.StatusCode != 200 {
+		return c.Status(resp.StatusCode).JSON(resp.Message)
+	}
+
+	return c.SendStatus(resp.StatusCode)
+}
+
+func (handler *Handler) UpdateKeeper(c *fiber.Ctx) error {
+	user := &domain.Keeper{}
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+
+	err = json.Unmarshal(c.Body(), &user)
+	if err != nil {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+	user.Id = uint(id)
+
+	resp := handler.Srv.UpdateKeeper(user)
+	if resp.StatusCode != 201 {
+		return c.Status(resp.StatusCode).JSON(resp.Message)
+	}
+
+	return c.SendStatus(resp.StatusCode)
+}
+
+func (handler *Handler) GetKeeper(c *fiber.Ctx) error {
+	user := &domain.Keeper{}
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+	user.Id = uint(id)
+
+	resp := handler.Srv.GetKeeper(user)
+	if resp.StatusCode != 200 {
+		return c.Status(resp.StatusCode).JSON(resp.Message)
+	}
+
+	return c.Status(resp.StatusCode).JSON(resp)
+}
+
+func (handler *Handler) GetKeepers(c *fiber.Ctx) error {
+	users, err := handler.Srv.GetKeepers()
+	if err != nil {
+		return c.Status(404).JSON("Unable to retrieve Users")
+	}
+
+	return c.Status(200).JSON(users)
+}
+
+func (handler *Handler) DeleteKeeper(c *fiber.Ctx) error {
+	user := &domain.Keeper{}
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+	user.Id = uint(id)
+
+	resp := handler.Srv.DeleteKeeper(user)
+	if resp.StatusCode != 200 {
+		return c.Status(resp.StatusCode).JSON(resp.Message)
+	}
+
+	return c.Status(resp.StatusCode).JSON(resp.Message)
+}
+
+func (handler *Handler) Login(c *fiber.Ctx) error {
+	cred := &domain.LoginResp{}
+	err := json.Unmarshal(c.Body(), &cred)
+	if err != nil {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+
+	resp := handler.Srv.Login(cred)
+	fmt.Println(resp)
+	if resp.StatusCode != 200 {
+		return c.Status(resp.StatusCode).JSON(resp)
+	}
+
+	return c.Status(resp.StatusCode).JSON(resp)
 }

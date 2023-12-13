@@ -5,10 +5,10 @@ import (
 	"fmt"
 )
 
-func (srv *Service) Register(user *domain.User) *domain.User {
-	err := srv.db.SaveUser(user)
+func (srv *Service) RegisterOwner(user *domain.Owner) *domain.Owner {
+	err := srv.db.SaveOwner(user)
 	if err != nil {
-		user.StatusCode = 400
+		user.StatusCode = 403
 		user.Message = fmt.Sprintf("Couldnt register USER : %v", err)
 		return user
 	}
@@ -16,8 +16,8 @@ func (srv *Service) Register(user *domain.User) *domain.User {
 	return user
 }
 
-func (srv *Service) UpdateUser(user *domain.User) *domain.User {
-	err := srv.db.UpdateUser(user)
+func (srv *Service) UpdateOwner(user *domain.Owner) *domain.Owner {
+	err := srv.db.UpdateOwner(user)
 	if err != nil {
 		user.StatusCode = 400
 		user.Message = fmt.Sprintf("Couldnt update USER : %v", err)
@@ -27,8 +27,8 @@ func (srv *Service) UpdateUser(user *domain.User) *domain.User {
 	return user
 }
 
-func (srv *Service) GetUser(user *domain.User) *domain.User {
-	err := srv.db.GetUser(user)
+func (srv *Service) GetOwner(user *domain.Owner) *domain.Owner {
+	err := srv.db.GetOwner(user)
 	if err != nil {
 		user.StatusCode = 400
 		user.Message = fmt.Sprintf("Couldnt get USER : %v", err)
@@ -38,9 +38,9 @@ func (srv *Service) GetUser(user *domain.User) *domain.User {
 	return user
 }
 
-func (srv *Service) DeleteUser(user *domain.User) *domain.Response {
+func (srv *Service) DeleteOwner(user *domain.Owner) *domain.Response {
 	resp := &domain.Response{}
-	err := srv.db.DeleteUser(user)
+	err := srv.db.DeleteOwner(user)
 	if err != nil {
 		resp.StatusCode = 400
 		resp.Message = fmt.Sprintf("Couldnt delete USER : %v", err)
@@ -51,39 +51,76 @@ func (srv *Service) DeleteUser(user *domain.User) *domain.Response {
 	return resp
 }
 
-func (srv *Service) GetUsers() ([]domain.User, error) {
-	users, err := srv.db.GetUsers()
+func (srv *Service) GetOwners() ([]domain.Owner, error) {
+	users, err := srv.db.GetOwners()
 	if err != nil {
 		return nil, err
 	}
 	return users, nil
 }
 
-func (srv *Service) Login(login *domain.LoginResp) *domain.User {
-	user, err := srv.db.Login(login)
-	if err != nil || user.Username == "" {
+func (srv *Service) RegisterKeeper(user *domain.Keeper) *domain.Keeper {
+	err := srv.db.SaveKeeper(user)
+	if err != nil {
 		user.StatusCode = 400
-		if err != nil {
-			user.Message = fmt.Sprintf("Couldnt get USER : %v", err)
-		} else {
-			user.Message = fmt.Sprintf("Wrong username/password")
-		}
+		user.Message = fmt.Sprintf("Couldnt register USER : %v", err)
 		return user
 	}
 	user.StatusCode = 200
 	return user
 }
 
-func (srv *Service) GetUserPerType(group string) ([]domain.UserPerType, *domain.Response) {
-	resp := &domain.Response{}
+func (srv *Service) UpdateKeeper(user *domain.Keeper) *domain.Keeper {
+	err := srv.db.UpdateKeeper(user)
+	if err != nil {
+		user.StatusCode = 400
+		user.Message = fmt.Sprintf("Couldnt update USER : %v", err)
+		return user
+	}
+	user.StatusCode = 201
+	return user
+}
 
-	users, err := srv.db.GetUserPerUserType(group)
+func (srv *Service) GetKeeper(user *domain.Keeper) *domain.Keeper {
+	err := srv.db.GetKeeper(user)
+	if err != nil {
+		user.StatusCode = 400
+		user.Message = fmt.Sprintf("Couldnt get USER : %v", err)
+		return user
+	}
+	user.StatusCode = 200
+	return user
+}
+
+func (srv *Service) DeleteKeeper(user *domain.Keeper) *domain.Response {
+	resp := &domain.Response{}
+	err := srv.db.DeleteKeeper(user)
 	if err != nil {
 		resp.StatusCode = 400
-		resp.Message = fmt.Sprintf("Couldn't get users: %v", err)
-		return users, resp
+		resp.Message = fmt.Sprintf("Couldnt delete USER : %v", err)
+		return resp
 	}
-
 	resp.StatusCode = 200
-	return users, resp
+	resp.Message = "Deleted user successfully"
+	return resp
+}
+
+func (srv *Service) GetKeepers() ([]domain.Keeper, error) {
+	users, err := srv.db.GetKeepers()
+	if err != nil {
+		return nil, err
+	}
+	return users, nil
+}
+
+func (srv *Service) Login(cred *domain.LoginResp) *domain.LoginResp {
+	err := srv.db.Login(cred)
+	if err != nil {
+		cred.StatusCode = 400
+		cred.Message = fmt.Sprintf("Couldnt login USER : %v", err)
+		return cred
+	}
+	cred.StatusCode = 200
+	fmt.Println("CORE", cred)
+	return cred
 }
