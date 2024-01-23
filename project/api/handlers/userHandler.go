@@ -172,6 +172,23 @@ func (handler *Handler) DeleteKeeper(c *fiber.Ctx) error {
 	return c.Status(resp.StatusCode).JSON(resp.Message)
 }
 
+func (handler *Handler) GetAdmin(c *fiber.Ctx) error {
+	user := &domain.Admin{}
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+	user.Id = uint(id)
+
+	resp := handler.Srv.GetAdmin(user)
+	if resp.StatusCode != 200 {
+		return c.Status(resp.StatusCode).JSON(resp.Message)
+	}
+
+	return c.Status(resp.StatusCode).JSON(resp)
+}
+
+
 func (handler *Handler) Login(c *fiber.Ctx) error {
 	cred := &domain.LoginResp{}
 	err := json.Unmarshal(c.Body(), &cred)
@@ -186,3 +203,19 @@ func (handler *Handler) Login(c *fiber.Ctx) error {
 
 	return c.Status(resp.StatusCode).JSON(resp)
 }
+
+func (handler *Handler) LoginAdmin(c *fiber.Ctx) error {
+	cred := &domain.LoginResp{}
+	err := json.Unmarshal(c.Body(), &cred)
+	if err != nil {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+
+	resp := handler.Srv.LoginAdmin(cred)
+	if resp.StatusCode != 200 {
+		return c.Status(resp.StatusCode).JSON(resp)
+	}
+
+	return c.Status(resp.StatusCode).JSON(resp)
+}
+

@@ -30,6 +30,17 @@ export class AuthService {
       }));
   }
 
+  loginadmin(params: LoginResp) {
+    return this.http.post<LoginResp>(`http://127.0.0.1:3000/login/admin/`, params)
+      .pipe(map(user => {
+        // Assuming the response contains a token
+        if (user && (user.user_id != 0)) {
+          this.curr_user = user.user_id;
+        }
+        return user;
+      }));
+  }
+
   logout() {
     this.curr_user = 0;
     this.router.navigate(['/login']);
@@ -39,3 +50,4 @@ export class AuthService {
     return this.curr_user != 0;
   }
 }
+

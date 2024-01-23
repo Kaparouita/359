@@ -86,3 +86,24 @@ func (db *Db) Login(cred *domain.LoginResp) error {
 	cred.UserType = owner.UserType
 	return nil
 }
+
+func (db *Db) LoginAdmin(cred *domain.LoginResp) error {
+	var admin domain.Admin
+	err := db.Model(&admin).Where("username = ?", cred.Username).Where("password = ?", cred.Password).First(&admin).Error
+	if err != nil {
+		return errors.New("invalid username or password")
+	}
+	cred.UserId = admin.Id
+	cred.UserType = admin.UserType
+	return nil
+}
+
+func (db *Db) GetAdmin(user *domain.Admin) error {
+	return db.Model(user).Find(user).Error
+}
+
+func (db *Db) SaveAdmin(user *domain.Admin) error {
+	err := db.Create(user).Error
+	return err
+}
+

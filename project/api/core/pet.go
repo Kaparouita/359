@@ -75,3 +75,19 @@ func (srv *Service) UpdatePetWeight(pet *domain.Pet) *domain.Pet {
 	pet.StatusCode = 201
 	return pet
 }
+
+func (srv *Service) GetNumberOfCats() (int, error) {
+	count, err := srv.db.GetNumberOfCats()
+	if err != nil {
+		return 0, err
+	}
+	return count, nil
+}
+
+func (srv *Service) GetNumberOfDogs() (int, error) {
+	count, err := srv.db.GetNumberOfDogs()
+	if err != nil {
+		return 0, err
+	}
+	return count, nil
+}

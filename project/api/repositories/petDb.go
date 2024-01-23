@@ -89,3 +89,15 @@ func IsPetIDValid(pet *domain.Pet) bool {
 	}
 	return true
 }
+
+func (db *Db) GetNumberOfCats() (int, error) {
+	var count int64
+	err := db.Model(&domain.Pet{}).Where("type = ?", "cat").Count(&count).Error
+	return int(count), err
+}
+
+func (db *Db) GetNumberOfDogs() (int, error) {
+	var count int64
+	err := db.Model(&domain.Pet{}).Where("type = ?", "dog").Count(&count).Error
+	return int(count), err
+}

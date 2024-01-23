@@ -23,7 +23,14 @@ func (server *Server) Initialize() {
 	login := app.Group("/login")
 	login.Post("/", server.handler.Login)
 
+	login.Post("/admin", server.handler.LoginAdmin)
+
 	users := app.Group("/users")
+
+	admin := users.Group("/admin")
+	admin.Get("/", server.handler.GetAdmin)
+
+
 
 	owners := users.Group("/owners")
 	owners.Get("/", server.handler.GetOwners)
@@ -45,9 +52,17 @@ func (server *Server) Initialize() {
 	pets.Put("/:id", server.handler.UpdatePet)
 	pets.Get("/:id", server.handler.GetPet)
 	pets.Get("/:type/:breed", server.handler.GetPetsByTypeAndBreed)
+	pets.Get("/:type/", server.handler.GetNumberOfCats)
+	pets.Get("/:type/", server.handler.GetNumberOfDogs)
+
+
+
 
 	app.Delete("petDeletion/:pet_id", server.handler.DeletePet)
 	app.Put("petWeight/:pet_id/:weight", server.handler.UpdatePetWeight)
 
+	
+
 	log.Fatal(app.Listen(":3000"))
 }
+

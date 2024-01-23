@@ -134,3 +134,19 @@ func (handler *Handler) UpdatePetWeight(c *fiber.Ctx) error {
 	resp.Message = "Updated pet weight successfully"
 	return c.Status(resp.StatusCode).JSON(resp.Message)
 }
+
+func (handler *Handler) GetNumberOfCats(c *fiber.Ctx) error {
+	count, err := handler.Srv.GetNumberOfCats()
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(err.Error())
+	}
+	return c.Status(200).JSON(count)
+}
+
+func (handler *Handler) GetNumberOfDogs(c *fiber.Ctx) error {
+	count, err := handler.Srv.GetNumberOfDogs()
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(err.Error())
+	}
+	return c.Status(200).JSON(count)
+}

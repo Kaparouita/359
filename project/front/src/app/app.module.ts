@@ -18,8 +18,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { LoginComponent } from './main-container/login/login.component';
 import { HomeComponent } from './main-container/home/home.component';
-
-
+import { AdminLoginComponent } from './main-container/admin-login/admin-login.component';
+import { AdminHomeComponent } from './main-container/admin-home/admin-home.component';
+import { KeeperBookingsComponent } from './main-container/keeper-bookings/keeper-bookings.component';
+import { TableModule } from 'primeng/table';
 
 
 @NgModule({
@@ -30,6 +32,9 @@ import { HomeComponent } from './main-container/home/home.component';
     CountriesComponent,
     LoginComponent,
     HomeComponent,
+    AdminLoginComponent,
+    AdminHomeComponent,
+    KeeperBookingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +48,7 @@ import { HomeComponent } from './main-container/home/home.component';
     FormsModule,
     DataViewModule,
     HttpClientModule,
+    TableModule,
     
   ],
   providers: [DatePipe],

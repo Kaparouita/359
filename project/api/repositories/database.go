@@ -44,6 +44,7 @@ func connectDb() (*gorm.DB, error) {
 		&domain.Pet{},
 		&domain.Owner{},
 		&domain.Keeper{},
+		&domain.Admin{},
 	)
 	return db, nil
 }

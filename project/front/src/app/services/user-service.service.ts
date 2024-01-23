@@ -33,4 +33,24 @@ export class UserServiceService {
   updateKeeper(params: User) {
     return this.http.put<User>(`http:////127.0.0.1:3000/users/keepers/`+ params.id, params);
   }
+
+  getAdmin(id: number) {
+    return this.http.get<User>(`http:////127.0.0.1:3000/users/admins/` + id);
+  }
+
+  getKeepers() {
+    return this.http.get<User[]>(`http:////127.0.0.1:3000/users/keepers/`);
+  }
+
+  DeleteKeeper(id: number) {
+    return this.http.delete(`http:////127.0.0.1:3000/users/keepers/` + id);
+  }
+
+  GetNumberOfCats() {
+    return this.http.get<number>(`http:////127.0.0.1:3000/admin/stats`);
+  }
+
+  GetNumberOfDogs() {
+    return this.http.get<number>(`http:////127.0.0.1:3000/admin/stats`);
+  }
 }

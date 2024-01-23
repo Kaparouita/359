@@ -4,6 +4,15 @@ import (
 	"time"
 )
 
+type Admin struct {
+	Id        uint      `json:"id" gorm:"primaryKey"`
+	CreatedAt time.Time `json:"created_at"`
+	Username  string    `json:"username" gorm:"uniqueIndex"`
+	Password  string    `json:"password"`
+	UserType  string    `json:"user_type"`
+	Response
+}
+
 type Owner struct {
 	Id        uint      `json:"id" gorm:"primaryKey"`
 	CreatedAt time.Time `json:"created_at"`

@@ -124,3 +124,25 @@ func (srv *Service) Login(cred *domain.LoginResp) *domain.LoginResp {
 	fmt.Println("CORE", cred)
 	return cred
 }
+
+func (srv *Service) GetAdmin(user *domain.Admin) *domain.Admin {
+	err := srv.db.GetAdmin(user)
+	if err != nil {
+		user.StatusCode = 400
+		user.Message = fmt.Sprintf("Couldnt get ADMIN: %v", err)
+		return user
+	}
+	user.StatusCode = 200
+	return user
+}
+
+func (srv *Service) LoginAdmin(cred *domain.LoginResp) *domain.LoginResp {
+	err := srv.db.LoginAdmin(cred)
+	if err != nil {
+		cred.StatusCode = 400
+		cred.Message = fmt.Sprintf("Couldnt login ADMIN : %v", err)
+		return cred
+	}
+	cred.StatusCode = 200
+	return cred
+}
