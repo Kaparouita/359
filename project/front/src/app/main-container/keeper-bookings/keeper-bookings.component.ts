@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-keeper-bookings',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class KeeperBookingsComponent {
 
+  constructor(private authService : AuthService) {}
+
+  ngOnInit(): void {
+  }
+
+  onLogout() {
+    this.authService.logout();
+  }
 }

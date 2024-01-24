@@ -21,6 +21,7 @@ import { HomeComponent } from './main-container/home/home.component';
 import { AdminLoginComponent } from './main-container/admin-login/admin-login.component';
 import { AdminHomeComponent } from './main-container/admin-home/admin-home.component';
 import { KeeperBookingsComponent } from './main-container/keeper-bookings/keeper-bookings.component';
+import { VisitorFindKeepersComponent } from './main-container/visitor-find-keepers/visitor-find-keepers.component';
 import { TableModule } from 'primeng/table';
 
 
@@ -35,6 +36,7 @@ import { TableModule } from 'primeng/table';
     AdminLoginComponent,
     AdminHomeComponent,
     KeeperBookingsComponent,
+    VisitorFindKeepersComponent,
   ],
   imports: [
     BrowserModule,

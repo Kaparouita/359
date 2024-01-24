@@ -7,6 +7,7 @@ import { AdminLoginComponent } from './main-container/admin-login/admin-login.co
 import { AdminHomeComponent } from './main-container/admin-home/admin-home.component';
 import { AdminStatsComponent } from './main-container/admin-stats/admin-stats.component';
 import { KeeperBookingsComponent } from './main-container/keeper-bookings/keeper-bookings.component';
+import { VisitorFindKeepersComponent } from './main-container/visitor-find-keepers/visitor-find-keepers.component';
 import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'admin/stats', component: AdminStatsComponent },
   { path: 'keeper-bookings/keeper/:user_id', component: KeeperBookingsComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'visitor-find-keepers', component: VisitorFindKeepersComponent },
 ];
 
 

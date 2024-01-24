@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Visitor page</title>
+</head>
+<body>
+    <div class="navbar navbar-expand-sm">
+        <div class="container-fluid">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="/visitor-find-keepers">PetKeepers</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="">Information</a>
+              </li>
+            </ul>
+          </div>
+    </div>
+    <div class="home">
+      <div class="card">
+        <p-table [value]="keepers" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="caption"> Keepers </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Username</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-keeper>
+                <tr>
+                    <td>{{ keeper.username }}</td>
+                    <td>{{ keeper.first_name }}</td>
+                    <td>{{ keeper.last_name }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div> 
+  </div>
+    
+</body>
+</html>
