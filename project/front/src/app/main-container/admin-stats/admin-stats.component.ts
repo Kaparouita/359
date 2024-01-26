@@ -14,7 +14,7 @@ interface userCount{
 }
 
 interface money{
-  keepers: number;
+  keeper: number;
   app: number;
 }
 
@@ -29,26 +29,34 @@ export class AdminStatsComponent implements OnInit{
 
   petCount: petCount = {cats: 0, dogs: 0};
   userCount: userCount = {owners: 0, keepers: 0};
-  money: money = {keepers: 0, app: 0};
+  money: money = {keeper: 0, app: 0};
 
   petsData: any;
-  options: any;
+  petOptions: any;
+
+  usersData: any;
+  usersOptions: any;
+
+  moneyData: any;
+  moneyOptions: any;
 
   ngOnInit() {
     this.adminService.getPetCount().subscribe((data : petCount) => {
       this.petCount = data;
-      this.updateChartData();
+      this.updateChartPetsData();
     });
     this.adminService.getUserCount().subscribe((data : userCount) => {
       this.userCount = data;
+      this.updateChartUsersData();
     });
     this.adminService.getMoney().subscribe((data : money) => {
       this.money = data;
+      this.updateChartMoneyData();
     });
 
   }
 
-  updateChartData() {
+  updateChartPetsData() {
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
 
@@ -65,7 +73,7 @@ export class AdminStatsComponent implements OnInit{
     };
 
 
-    this.options = {
+    this.petOptions = {
         cutout: '60%',
         plugins: {
             legend: {
@@ -77,6 +85,95 @@ export class AdminStatsComponent implements OnInit{
     };
   }
 
+  updateChartUsersData() {
+        const documentStyle = getComputedStyle(document.documentElement);
+        const textColor = documentStyle.getPropertyValue('--text-color');
+        const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+        const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+        
+        console.log(this.userCount.owners);
+
+        this.usersData = {
+            labels: ['Users'],
+            datasets: [
+                {
+                    label: 'Keepers',
+                    backgroundColor: documentStyle.getPropertyValue('--blue-500'),
+                    borderColor: documentStyle.getPropertyValue('--blue-500'),
+                    data: [this.userCount.keepers]
+                },
+                {
+                    label: 'Owners',
+                    backgroundColor: documentStyle.getPropertyValue('--pink-500'),
+                    borderColor: documentStyle.getPropertyValue('--pink-500'),
+                    data: [this.userCount.owners]
+                }
+            ]
+        };
+
+        this.usersOptions = {
+            maintainAspectRatio: false,
+            aspectRatio: 0.8,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: textColor
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        color: textColorSecondary,
+                        font: {
+                            weight: 500
+                        }
+                    },
+                    grid: {
+                        color: surfaceBorder,
+                        drawBorder: false
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: textColorSecondary
+                    },
+                    grid: {
+                        color: surfaceBorder,
+                        drawBorder: false
+                    }
+                }
+
+            }
+        };
+    }
+
+    updateChartMoneyData() {
+      const documentStyle = getComputedStyle(document.documentElement);
+        const textColor = documentStyle.getPropertyValue('--text-color');
+        this.moneyData = {
+            labels: ['keepers','app'],
+            datasets: [
+                {
+                    data: [this.money.keeper, this.money.app],
+                    backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--green-500')],
+                    hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--green-400')]
+                }
+            ]
+        };
+
+        this.moneyOptions = {
+            plugins: {
+                legend: {
+                    labels: {
+                        usePointStyle: true,
+                        color: textColor
+                    }
+                }
+            }
+        };
+    }
 }
+
   
     

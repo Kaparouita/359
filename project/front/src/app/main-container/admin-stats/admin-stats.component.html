@@ -17,15 +17,23 @@
           </div>
     </div>
     <div class="home">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1>Statistics</h1> 
-                    <div class="card flex justify-content-center">
-                      <p-chart type="doughnut" [data]="petsData" [options]="options"></p-chart>
-                    </div>    
-                </div>
+      <div class="container">
+        <div class="row">
+            <div class="row-md-12">
+                <h1>Statistics</h1>
+                <div class="card flex flex-row align-items-center">
+                    <div class="chart-container">
+                      <p-chart type="doughnut" [data]="petsData" [options]="petOptions"></p-chart>
+                    </div>
+                    <div class="chart-container">
+                        <p-chart type="bar" [data]="usersData" [options]="usersOptions"></p-chart>
+                    </div>
+                    <div class="chart-container">
+                      <p-chart type="pie" [data]="moneyData" [options]="moneyOptions"></p-chart>
+                  </div>
+                </div>    
             </div>
         </div>
-          
-    </div>
+    </div>    
+  </div>
+  
