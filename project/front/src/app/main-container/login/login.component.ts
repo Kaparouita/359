@@ -22,12 +22,12 @@ export class LoginComponent {
       (data) => {
         if(data.user_type == 'keeper'){
         console.log(data);
-        let url = '/keeper/' + data.user_id + '/home';
+        let url = '/keeper/' + data.user_id ;
         console.log(url);
         this.router.navigate([url]);
         }else if(data.user_type == 'owner'){
           console.log(data);
-          let url = '/owner/' + data.user_id + '/home';
+          let url = '/owner/' + data.user_id ;
           console.log(url);
           this.router.navigate([url]);
         }

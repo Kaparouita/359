@@ -10,6 +10,7 @@ import { VisitorFindKeepersComponent } from './main-container/visitor-find-keepe
 import { KeeperHomeComponent } from './main-container/keeper-home/keeper-home.component';
 import { OwnerHomeComponent } from './main-container/owner-home/owner-home.component';
 import { AuthGuard } from './services/auth.guard';
+import { OwnerAddPetComponent } from './main-container/owner-add-pet/owner-add-pet.component';
 
 const routes: Routes = [
   // Existing routes...
@@ -23,9 +24,9 @@ const routes: Routes = [
   { path: 'keeper/:user_id/bookings', component: KeeperBookingsComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'visitor-find-keepers', component: VisitorFindKeepersComponent },
-  { path: 'keeper/:user_id/home', component: KeeperHomeComponent ,canActivate: [AuthGuard]},
-  { path: 'owner/:user_id/home', component: OwnerHomeComponent ,canActivate: [AuthGuard]},
-  { path: 'owner/:user_id/add-pet', component: OwnerHomeComponent ,canActivate: [AuthGuard]},
+  { path: 'keeper/:user_id', component: KeeperHomeComponent ,canActivate: [AuthGuard]},
+  { path: 'owner/:user_id', component: OwnerHomeComponent ,canActivate: [AuthGuard]},
+  { path: 'owner/:user_id/add-pet', component: OwnerAddPetComponent ,canActivate: [AuthGuard]},
 ];
 
 
