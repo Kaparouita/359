@@ -20,10 +20,17 @@ export class LoginComponent {
 
     this.authService.login(params).subscribe(
       (data) => {
+        if(data.user_type == 'keeper'){
         console.log(data);
-        let url = '/home/' + data.user_type + '/' + data.user_id;
+        let url = '/keeper-home/' + data.user_id;
         console.log(url);
         this.router.navigate([url]);
+        }else if(data.user_type == 'owner'){
+          console.log(data);
+          let url = '/owner-home/' + data.user_id;
+          console.log(url);
+          this.router.navigate([url]);
+        }
       },
       (error) => {
         console.log(error);
