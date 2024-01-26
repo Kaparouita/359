@@ -33,12 +33,13 @@ func (srv *Service) InitUsers() error {
 		Username: "user2",
 		Email:    "user2@example.com",
 	}
-	
+
 	user3 := &domain.Admin{
-		Id:       3,
-		Username: "user3",
+		Id:       1,
+		Username: "admin",
+		Password: "admin",
+		UserType: "admin",
 	}
-	
 
 	// Save user1 and user2 to the database using srv.db
 	err := srv.db.SaveOwner(user1)
