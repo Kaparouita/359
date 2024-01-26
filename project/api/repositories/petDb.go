@@ -12,15 +12,28 @@ func (db *Db) SavePet(pet *domain.Pet) error {
 		return errors.New("pet format is invalid")
 	}
 
+	// Check if pet owner exists
+	var owner domain.Owner
+	err := db.Model(&owner).Where("id = ?", pet.OwnerId).First(&owner).Error
+	if err != nil {
+
+		return errors.New("pet owner does not exist")
+	}
+
+	// Check if pet already exists
 	var existingPet domain.Pet
-	err := db.Model(&existingPet).Where("pet_id = ?", pet.PetID).First(&existingPet).Error
+	err = db.Model(&existingPet).Where("pet_id = ?", pet.PetID).First(&existingPet).Error
 	if err == nil {
-		pet.StatusCode = 403
-		pet.Message = "PetID already exists"
 		return errors.New("pet_id already exists")
 	}
 
-	return db.Model(pet).Create(pet).Error
+	err = db.Model(pet).Create(pet).Error
+	if err != nil {
+		return err
+	}
+	// Add pet to owner's pets
+	owner.Pets = append(owner.Pets, *pet)
+	return db.Model(&owner).Updates(&owner).Error
 }
 
 func (db *Db) UpdatePet(pet *domain.Pet) error {

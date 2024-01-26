@@ -32,6 +32,7 @@ type Owner struct {
 	Phone     string    `json:"phone"`
 	Lat       float64   `json:"lat"`
 	Lon       float64   `json:"lon"`
+	Pets      []Pet     `json:"pets" gorm:"foreignKey:OwnerId"`
 	Response
 }
 

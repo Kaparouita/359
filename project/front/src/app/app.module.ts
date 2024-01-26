@@ -20,8 +20,12 @@ import { LoginComponent } from './main-container/login/login.component';
 import { HomeComponent } from './main-container/home/home.component';
 import { AdminLoginComponent } from './main-container/admin-login/admin-login.component';
 import { AdminHomeComponent } from './main-container/admin-home/admin-home.component';
+import { AdminStatsComponent } from './main-container/admin-stats/admin-stats.component';
 import { KeeperBookingsComponent } from './main-container/keeper-bookings/keeper-bookings.component';
 import { TableModule } from 'primeng/table';
+import { ChartModule } from 'primeng/chart';
+import { Chart } from 'chart.js';
+
 
 
 @NgModule({
@@ -34,6 +38,7 @@ import { TableModule } from 'primeng/table';
     HomeComponent,
     AdminLoginComponent,
     AdminHomeComponent,
+    AdminStatsComponent,
     KeeperBookingsComponent,
   ],
   imports: [
@@ -41,7 +46,7 @@ import { TableModule } from 'primeng/table';
     AppRoutingModule,
     ToastModule,
     InputTextModule,
-    ButtonModule,
+    ButtonModule, 
     DropdownModule,
     CardModule,
     PasswordModule,
@@ -49,9 +54,10 @@ import { TableModule } from 'primeng/table';
     DataViewModule,
     HttpClientModule,
     TableModule,
-    
+    ChartModule,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
+  
 })
 export class AppModule { }

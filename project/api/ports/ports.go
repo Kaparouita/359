@@ -31,8 +31,15 @@ type Service interface {
 	GetNumberOfCats() (int, error)
 	GetNumberOfDogs() (int, error)
 
+	GetBooking(booking *domain.Booking) *domain.Booking
+	CreateBooking(booking *domain.Booking) *domain.Booking
+	UpdateBooking(booking *domain.Booking) *domain.Booking
+	GetBookings() ([]domain.Booking, error)
+	DeleteBooking(booking *domain.Booking) *domain.Response
+
 	GetAdmin(admin *domain.Admin) *domain.Admin
-	
+	GetMoney() ([]int, error)
+
 	Login(cred *domain.LoginResp) *domain.LoginResp
 	LoginAdmin(cred *domain.LoginResp) *domain.LoginResp
 }
@@ -60,12 +67,17 @@ type Db interface {
 	GetNumberOfCats() (int, error)
 	GetNumberOfDogs() (int, error)
 
+	SaveBooking(booking *domain.Booking) error
+	GetBooking(booking *domain.Booking) error
+	UpdateBooking(booking *domain.Booking) error
+	GetBookings() ([]domain.Booking, error)
+	DeleteBooking(booking *domain.Booking) error
+
 	Login(cred *domain.LoginResp) error
 	LoginAdmin(cred *domain.LoginResp) error
 
 	GetAdmin(admin *domain.Admin) error
 	SaveAdmin(admin *domain.Admin) error
-	
 }
 
 type Handler interface {
@@ -91,8 +103,16 @@ type Handler interface {
 	GetNumberOfCats(c *fiber.Ctx) error
 	GetNumberOfDogs(c *fiber.Ctx) error
 
-	GetAdmin(c *fiber.Ctx) error
+	CreateBooking(c *fiber.Ctx) error
+	UpdateBooking(c *fiber.Ctx) error
+	GetBooking(c *fiber.Ctx) error
+	GetBookings(c *fiber.Ctx) error
+	DeleteBooking(c *fiber.Ctx) error
 
+	GetAdmin(c *fiber.Ctx) error
+	GetNumberOfCatsAndDogs(c *fiber.Ctx) error
+	GetMoney(c *fiber.Ctx) error
+	GetNumberOfUsers(c *fiber.Ctx) error
 
 	Login(c *fiber.Ctx) error
 	LoginAdmin(c *fiber.Ctx) error

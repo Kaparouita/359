@@ -8,6 +8,8 @@ import (
 func (srv *Service) SavePet(pet *domain.Pet) *domain.Pet {
 	err := srv.db.SavePet(pet)
 	if err != nil {
+		pet.StatusCode = 400
+		pet.Message = fmt.Sprintf("Couldnt create PET : %v", err)
 		return pet
 	}
 	pet.StatusCode = 200
