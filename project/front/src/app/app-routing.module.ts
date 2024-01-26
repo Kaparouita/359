@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'admin-login', component: AdminLoginComponent },
   { path: 'admin-home', component: AdminHomeComponent },
   { path: 'admin/stats', component: AdminStatsComponent},
-  { path: 'keeper-bookings/keeper/:user_id', component: KeeperBookingsComponent },
+  { path: 'keeper/:user_id/bookings', component: KeeperBookingsComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'visitor-find-keepers', component: VisitorFindKeepersComponent },
   { path: 'keeper/:user_id/home', component: KeeperHomeComponent ,canActivate: [AuthGuard]},
