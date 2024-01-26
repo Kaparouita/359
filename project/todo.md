@@ -2,4 +2,9 @@
 
 1. na diagrafonte kai ta bookings otan diagrafete user
 2. logout ston admin
-3. footer gia olous tous xristes
+
+
+## OWNER
+
+1. na xwrisoume keepers home / owners home 
+2. (isws) na ftiaksoume to UI sto keepers home
