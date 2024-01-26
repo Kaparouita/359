@@ -6,6 +6,7 @@ import (
 )
 
 func (srv *Service) SavePet(pet *domain.Pet) *domain.Pet {
+
 	err := srv.db.SavePet(pet)
 	if err != nil {
 		pet.StatusCode = 400

@@ -28,6 +28,7 @@ import { OwnerAddPetComponent } from './main-container/owner-add-pet/owner-add-p
 import { TableModule } from 'primeng/table';
 import { ChartModule } from 'primeng/chart';
 import { Chart } from 'chart.js';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -61,6 +62,7 @@ import { Chart } from 'chart.js';
     HttpClientModule,
     TableModule,
     ChartModule,
+    ReactiveFormsModule,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
