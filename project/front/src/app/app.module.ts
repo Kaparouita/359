@@ -22,6 +22,7 @@ import { AdminLoginComponent } from './main-container/admin-login/admin-login.co
 import { AdminHomeComponent } from './main-container/admin-home/admin-home.component';
 import { AdminStatsComponent } from './main-container/admin-stats/admin-stats.component';
 import { KeeperBookingsComponent } from './main-container/keeper-bookings/keeper-bookings.component';
+import { VisitorFindKeepersComponent } from './main-container/visitor-find-keepers/visitor-find-keepers.component';
 import { TableModule } from 'primeng/table';
 import { ChartModule } from 'primeng/chart';
 import { Chart } from 'chart.js';
@@ -40,6 +41,7 @@ import { Chart } from 'chart.js';
     AdminHomeComponent,
     AdminStatsComponent,
     KeeperBookingsComponent,
+    VisitorFindKeepersComponent,
   ],
   imports: [
     BrowserModule,
