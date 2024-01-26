@@ -12,7 +12,7 @@ interface userCount{
 }
 
 interface money{
-  keepers: number;
+  keeper: number;
   app: number;
 }
 
