@@ -6,5 +6,10 @@
 
 ## OWNER
 
-1. na xwrisoume keepers home / owners home 
-2. (isws) na ftiaksoume to UI sto keepers home
+1. na xwrisoume keepers home / owners home  (done)
+2. (isws) na ftiaksoume to UI sto keepers home (done)
+
+## KEEPER
+1. bookings accept/reject
+2. see bookings
+4. messages

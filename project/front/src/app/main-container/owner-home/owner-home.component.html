@@ -45,16 +45,16 @@
 
     <!-- Edit Mode -->
     <div class="flex flex-column" *ngIf="editMode">
-        <div class="flex-item">
+        <div class="flex-item-">
             <label for="name">Username    </label>
             <input id="name" type="text" pInputText [disabled]="true" [(ngModel)]="user.username" />
         </div>
 
-        <div class="flex-item">
+        <div class="flex-item-">
             <label for="email">Email  </label>
             <input id="email" type="email" pInputText [(ngModel)]="user.email" [disabled]="true"/>
         </div>
-        <div class="flex-item">
+        <div class="flex-item-">
             <label for="password">Password    </label>
             <input
                 id="password"
@@ -62,12 +62,12 @@
                 pInputText
                 [(ngModel)]="user.password"
             />
-            <button type="button" class="btn btn-primary" (click)="togglePasswordVisibility()">
+            <button type="button" id="buttonpwd" class="btn btn-primary" (click)="togglePasswordVisibility()">
                 {{ passwordVisable ? 'Hide' : 'Show' }} Pass
             </button>
         </div>
     
-    <div class="flex-item">
+    <div class="flex-item-">
       <label for="firstname">Firstname  </label>
       <input
         id="firstname"
@@ -77,7 +77,7 @@
       />
     </div>
 
-    <div class="flex-item">
+    <div class="flex-item-">
       <label for="lastname">Lastname    </label>
       <input
         id="lastname"
@@ -87,7 +87,7 @@
       />
     </div>
 
-    <div class="flex-item">
+    <div class="flex-item-">
             <label for="gender">Gender  </label>
             <select
               class="form-control"
@@ -102,7 +102,7 @@
             </select>
     </div>
 
-    <div class="flex-item">
+    <div class="flex-item-">
       <label for="birthdate">Birthdate  </label>
       <input
         id="birthdate"
@@ -112,51 +112,52 @@
       />
     </div>
 
-    <div class="flex-item">
+    <div class="flex-item-">
       <label for="country">Country  </label>
       <input id="country" type="text" pInputText [(ngModel)]="user.country" />
     </div>
 
-    <div class="flex-item">
-      <label for="ciry">Ciry    </label>
-      <input id="ciry" type="text" pInputText [(ngModel)]="user.city" />
+    <div class="flex-item-">
+      <label for="city">City    </label>
+      <input id="city" type="text" pInputText [(ngModel)]="user.city" />
     </div>
 
-    <div class="flex-item">
+    <div class="flex-item-">
       <label for="address">Address  </label>
       <input id="address" type="text" pInputText [(ngModel)]="user.address" />
     </div>
 
-    <div class="flex-item">
+    <div class="flex-item-">
       <label for="url">Url  </label>
       <input id="url" type="text" pInputText [(ngModel)]="user.url" />
     </div>
 
-    <div class="flex-item">
+    <div class="flex-item-">
       <label for="job">Job  </label>
       <input id="job" type="text" pInputText [(ngModel)]="user.job" />
     </div>
 
-    <div class="flex-item">
+    <div class="flex-item-">
       <label for="phone">Phone  </label>
       <input id="phone" type="text" pInputText [(ngModel)]="user.phone" />
     </div>
 
-    <div class="flex-item">
+    <div class="flex-item-">
       <label for="lat">Lat  </label>
       <input id="lat" type="text" pInputText [disabled]="true" [(ngModel)]="user.lat" />
     </div>
 
-    <div class="flex-item">
+    <div class="flex-item-">
       <label for="lon">Lon  </label>
       <input id="lon" type="text" pInputText [disabled]="true" [(ngModel)] ="user.lon" />
     </div>
   </div>
 </div>
   <!-- Edit Button -->
-  <div class="flex-item" *ngIf="!editMode">
+  <div class="flex-item-" *ngIf="!editMode">
     <button
       type="button"
+      class="btn btn-primary"
       pButton
       label="Edit"
       (click)="editMode = true"
@@ -165,7 +166,7 @@
 
   <!-- Save Button -->
   <div class="flex-item" *ngIf="editMode">
-    <button type="button" pButton label="Save" (click)="saveChanges()"></button>
+    <button type="button" class="btn btn-primary" pButton label="Save" (click)="saveChanges()"></button>
   </div>
 </div>
 

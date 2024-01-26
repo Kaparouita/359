@@ -45,30 +45,30 @@
 
     <!-- Edit Mode -->
     <div class="flex flex-column" *ngIf="editMode">
-        <div class="flex-item">
-            <label for="name">Username    </label>
+        <div class="flex-item-">
+            <label for="name">Username:    </label>
             <input id="name" type="text" pInputText [disabled]="true" [(ngModel)]="user.username" />
         </div>
 
-        <div class="flex-item">
-            <label for="email">Email  </label>
+        <div class="flex-item-">
+            <label for="email">Email:  </label>
             <input id="email" type="email" pInputText [(ngModel)]="user.email" [disabled]="true"/>
         </div>
-        <div class="flex-item">
-            <label for="password">Password    </label>
+        <div class="flex-item-">
+            <label for="password">Password:    </label>
             <input
                 id="password"
                 type="{{ passwordVisable ? 'text' : 'password' }}"
                 pInputText
                 [(ngModel)]="user.password"
             />
-            <button type="button" class="btn btn-primary" (click)="togglePasswordVisibility()">
+            <button type="button" id="buttonpwd" class="btn btn-primary" (click)="togglePasswordVisibility()">
                 {{ passwordVisable ? 'Hide' : 'Show' }} Pass
             </button>
         </div>
     
-    <div class="flex-item">
-      <label for="firstname">Firstname  </label>
+    <div class="flex-item-">
+      <label for="firstname">Firstname:  </label>
       <input
         id="firstname"
         type="text"
@@ -77,8 +77,8 @@
       />
     </div>
 
-    <div class="flex-item">
-      <label for="lastname">Lastname    </label>
+    <div class="flex-item-">
+      <label for="lastname">Lastname:    </label>
       <input
         id="lastname"
         type="text"
@@ -87,8 +87,8 @@
       />
     </div>
 
-    <div class="flex-item">
-            <label for="gender">Gender  </label>
+    <div class="flex-item-">
+            <label for="gender">Gender:  </label>
             <select
               class="form-control"
               id="gender"
@@ -102,8 +102,8 @@
             </select>
     </div>
 
-    <div class="flex-item">
-      <label for="birthdate">Birthdate  </label>
+    <div class="flex-item-">
+      <label for="birthdate">Birthdate:  </label>
       <input
         id="birthdate"
         type="date"
@@ -112,51 +112,52 @@
       />
     </div>
 
-    <div class="flex-item">
-      <label for="country">Country  </label>
+    <div class="flex-item-">
+      <label for="country">Country:  </label>
       <input id="country" type="text" pInputText [(ngModel)]="user.country" />
     </div>
 
-    <div class="flex-item">
-      <label for="ciry">Ciry    </label>
+    <div class="flex-item-">
+      <label for="ciry">City:    </label>
       <input id="ciry" type="text" pInputText [(ngModel)]="user.city" />
     </div>
 
-    <div class="flex-item">
-      <label for="address">Address  </label>
+    <div class="flex-item-">
+      <label for="address">Address:  </label>
       <input id="address" type="text" pInputText [(ngModel)]="user.address" />
     </div>
 
-    <div class="flex-item">
-      <label for="url">Url  </label>
+    <div class="flex-item-">
+      <label for="url">Url:  </label>
       <input id="url" type="text" pInputText [(ngModel)]="user.url" />
     </div>
 
-    <div class="flex-item">
-      <label for="job">Job  </label>
+    <div class="flex-item-">
+      <label for="job">Job:  </label>
       <input id="job" type="text" pInputText [(ngModel)]="user.job" />
     </div>
 
-    <div class="flex-item">
-      <label for="phone">Phone  </label>
+    <div class="flex-item-">
+      <label for="phone">Phone:  </label>
       <input id="phone" type="text" pInputText [(ngModel)]="user.phone" />
     </div>
 
-    <div class="flex-item">
-      <label for="lat">Lat  </label>
+    <div class="flex-item-">
+      <label for="lat">Lat:  </label>
       <input id="lat" type="text" pInputText [disabled]="true" [(ngModel)]="user.lat" />
     </div>
 
-    <div class="flex-item">
-      <label for="lon">Lon  </label>
+    <div class="flex-item-">
+      <label for="lon">Lon:  </label>
       <input id="lon" type="text" pInputText [disabled]="true" [(ngModel)] ="user.lon" />
     </div>
   </div>
 </div>
   <!-- Edit Button -->
-  <div class="flex-item" *ngIf="!editMode">
+  <div class="flex-item-" *ngIf="!editMode">
     <button
       type="button"
+      class="btn btn-primary"
       pButton
       label="Edit"
       (click)="editMode = true"
@@ -164,8 +165,8 @@
   </div>
 
   <!-- Save Button -->
-  <div class="flex-item" *ngIf="editMode">
-    <button type="button" pButton label="Save" (click)="saveChanges()"></button>
+  <div class="flex-item-" *ngIf="editMode">
+    <button type="button" class="btn btn-primary" pButton label="Save" (click)="saveChanges()"></button>
   </div>
 </div>
 
