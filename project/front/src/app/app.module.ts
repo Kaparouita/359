@@ -17,7 +17,6 @@ import { CountriesComponent } from './register/map/countries/countries.component
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { LoginComponent } from './main-container/login/login.component';
-import { HomeComponent } from './main-container/home/home.component';
 import { AdminLoginComponent } from './main-container/admin-login/admin-login.component';
 import { AdminHomeComponent } from './main-container/admin-home/admin-home.component';
 import { AdminStatsComponent } from './main-container/admin-stats/admin-stats.component';
@@ -25,6 +24,7 @@ import { KeeperBookingsComponent } from './main-container/keeper-bookings/keeper
 import { VisitorFindKeepersComponent } from './main-container/visitor-find-keepers/visitor-find-keepers.component';
 import { KeeperHomeComponent } from './main-container/keeper-home/keeper-home.component';
 import { OwnerHomeComponent } from './main-container/owner-home/owner-home.component';
+import { OwnerAddPetComponent } from './main-container/owner-add-pet/owner-add-pet.component';
 import { TableModule } from 'primeng/table';
 import { ChartModule } from 'primeng/chart';
 import { Chart } from 'chart.js';
@@ -38,7 +38,6 @@ import { Chart } from 'chart.js';
     MapComponent,
     CountriesComponent,
     LoginComponent,
-    HomeComponent,
     AdminLoginComponent,
     AdminHomeComponent,
     AdminStatsComponent,
@@ -46,6 +45,7 @@ import { Chart } from 'chart.js';
     VisitorFindKeepersComponent,
     KeeperHomeComponent,
     OwnerHomeComponent,
+    OwnerAddPetComponent,
   ],
   imports: [
     BrowserModule,

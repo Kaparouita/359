@@ -2,7 +2,6 @@
 import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './main-container/login/login.component';
-import { HomeComponent } from './main-container/home/home.component';
 import { AdminLoginComponent } from './main-container/admin-login/admin-login.component';
 import { AdminHomeComponent } from './main-container/admin-home/admin-home.component';
 import { AdminStatsComponent } from './main-container/admin-stats/admin-stats.component';
@@ -19,13 +18,14 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'admin-login', component: AdminLoginComponent },
-  { path: 'admin-home', component: AdminHomeComponent ,canActivate: [AuthGuard]},
-  { path: 'admin/stats', component: AdminStatsComponent ,canActivate: [AuthGuard]},
+  { path: 'admin-home', component: AdminHomeComponent },
+  { path: 'admin/stats', component: AdminStatsComponent},
   { path: 'keeper-bookings/keeper/:user_id', component: KeeperBookingsComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'visitor-find-keepers', component: VisitorFindKeepersComponent },
-  { path: 'keeper-home/:user_id', component: KeeperHomeComponent ,canActivate: [AuthGuard]},
-  { path: 'owner-home/:user_id', component: OwnerHomeComponent ,canActivate: [AuthGuard]},
+  { path: 'keeper/:user_id/home', component: KeeperHomeComponent ,canActivate: [AuthGuard]},
+  { path: 'owner/:user_id/home', component: OwnerHomeComponent ,canActivate: [AuthGuard]},
+  { path: 'owner/:user_id/add-pet', component: OwnerHomeComponent ,canActivate: [AuthGuard]},
 ];
 
 
