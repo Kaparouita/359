@@ -15,6 +15,7 @@ func (handler *Handler) RegisterPet(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON("Unable to register pet")
 	}
+
 	resp := handler.Srv.SavePet(pet)
 	if resp.StatusCode != 200 {
 		return c.Status(resp.StatusCode).JSON(resp.Message)

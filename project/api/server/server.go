@@ -29,8 +29,9 @@ func (server *Server) Initialize() {
 
 	admin := users.Group("/admin")
 	admin.Get("/", server.handler.GetAdmin)
-
-
+	admin.Get("/petsNumber", server.handler.GetNumberOfCatsAndDogs)
+	admin.Get("/money", server.handler.GetMoney)
+	admin.Get("/usersNumber", server.handler.GetNumberOfUsers)
 
 	owners := users.Group("/owners")
 	owners.Get("/", server.handler.GetOwners)
@@ -55,14 +56,15 @@ func (server *Server) Initialize() {
 	pets.Get("/:type/", server.handler.GetNumberOfCats)
 	pets.Get("/:type/", server.handler.GetNumberOfDogs)
 
-
-
+	bookings := app.Group("/bookings")
+	bookings.Get("/", server.handler.GetBookings)
+	bookings.Post("/", server.handler.CreateBooking)
+	bookings.Put("/:id", server.handler.UpdateBooking)
+	bookings.Get("/:id", server.handler.GetBooking)
+	bookings.Delete("/:id", server.handler.DeleteBooking)
 
 	app.Delete("petDeletion/:pet_id", server.handler.DeletePet)
 	app.Put("petWeight/:pet_id/:weight", server.handler.UpdatePetWeight)
 
-	
-
 	log.Fatal(app.Listen(":3000"))
 }
-

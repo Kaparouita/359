@@ -3,7 +3,7 @@ package domain
 type Pet struct {
 	ID          int    `json:"id" gorm:"primaryKey"`
 	PetID       string `json:"pet_id" gorm:"uniqueIndex"` // 10 numbers
-	OwnerID     int    `json:"owner_id" gorm:"foreignKey:OwnerRefer"`
+	OwnerId     int    `json:"owner_id"`
 	Name        string `json:"name"`
 	Age         int    `json:"age"`
 	Type        string `json:"type"`
