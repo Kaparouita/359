@@ -24,6 +24,12 @@ func (db *Db) GetBookings() ([]domain.Booking, error) {
 	return bookings, err
 }
 
+func (db *Db) GetBookingsByKeeperId(id uint) ([]domain.Booking, error) {
+	var bookings []domain.Booking
+	err := db.DB.Where("keeper_id = ?", id).Find(&bookings).Error
+	return bookings, err
+}
+
 func (db *Db) DeleteBooking(booking *domain.Booking) error {
 	return db.DB.Delete(&booking).Error
 }

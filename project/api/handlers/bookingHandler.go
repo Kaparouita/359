@@ -69,6 +69,18 @@ func (handler *Handler) GetBookings(c *fiber.Ctx) error {
 	return c.Status(200).JSON(bookings)
 }
 
+func (handler *Handler) GetBookingsByKeeperId(c *fiber.Ctx) error {
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+	bookings, err := handler.Srv.GetBookingsByKeeperId(int(id))
+	if err != nil {
+		return c.Status(500).JSON("Unable to get bookings")
+	}
+	return c.Status(200).JSON(bookings)
+}
+
 func (handler *Handler) DeleteBooking(c *fiber.Ctx) error {
 	booking := &domain.Booking{}
 	id, err := c.ParamsInt("id")

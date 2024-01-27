@@ -11,7 +11,7 @@
           <a class="nav-link" [routerLink]="'keeper/' + keeper.id ">Profile</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="'keeper/'+ keeper.id +'/bookings'">Bookings</a>
+          <a class="nav-link" [routerLink]="'/bookings'">Bookings</a>
         </li>
         <li class="nav-item">
           <button type="button" class="btn btn-primary mb-auto" (click)="onLogout()">
@@ -27,26 +27,26 @@
         <ng-template pTemplate="header">
             <tr>
                 <th>ID</th>
-                <th>Owner's First Name</th>
-                <th>Owner's Last Name</th>
-                <th>Type of pet</th>
+                <th>owner id</th>
+                <th>Pet ID</th>
                 <th>Start date</th>
                 <th>End date</th>
                 <th>Price</th>
                 <th>Status</th> <!-- Added "Action" column -->
+                <th>Process</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-keeper>
+        <ng-template pTemplate="body" let-booking>
             <tr>
                 <td>{{ booking.id }}</td>
-                <td>{{ owner.first_name }}</td>
-                <td>{{ owner.last_name }}</td>
-                <td>{{ owner.id }}</td>
-                <td>{{ booking.start_date }}</td>
-                <td>{{ booking.end_date }}</td>
+                <td>{{ booking.owner_id }}</td>
+                <td>{{ booking.pet_id }}</td>
+                <td>{{ booking.start_date | date:'yyyy-MM-dd' }}</td>
+                <td>{{ booking.end_date  | date:'yyyy-MM-dd' }}</td>
                 <td>{{ booking.price }}</td>
+                <td>{{ booking.status }}</td>
                 <td>
-                    <!-- <button (click)=""></button> Added "Delete" button -->
+                  <button type="button" class="btn btn-primary mb-auto" (click)="onAccept(booking)">Accept</button>
                 </td>
             </tr>
         </ng-template>

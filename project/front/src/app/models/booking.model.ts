@@ -7,20 +7,20 @@ export class Booking{
     end_date: string;
     price: number;
     status: string;
-    message: string = '';
+    message:  string = '';
 
     constructor(
-        ownerid: number = 0,
-        keeperid: number = 0,
-        petid: number = 0,
+        owner_id: number = 0,
+        keeper_id: number = 0,
+        pet_id: number = 0,
         start_date: string = '',
         end_date: string = '',
         price: number = 0,
         status: string = ''
     ) {
-        this.owner_id = ownerid;
-        this.keeper_id = keeperid;
-        this.pet_id = petid;
+        this.owner_id = owner_id;
+        this.keeper_id = keeper_id;
+        this.pet_id = pet_id;
         this.start_date = start_date;
         this.end_date = end_date;
         this.price = price;

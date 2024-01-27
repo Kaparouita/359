@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { User } from 'src/app/models/user.model';
 import { Booking } from 'src/app/models/booking.model';
+import { Pet } from 'src/app/models/pet.model';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class KeeperBookingsComponent {
   keeper = new User();
   booking = new Booking();
   owner = new User();
-  pet = new User();
+  pet = new Pet();
 
   bookings: Booking[] = [];
 
@@ -36,7 +37,7 @@ export class KeeperBookingsComponent {
             console.error('Error fetching owner data', error);
           }
         );
-        this.userService.GetBookings(parseInt(userId || '0', 10)).subscribe(
+        this.userService.GetBookingsByKeeperId(parseInt(userId || '0', 10)).subscribe(
           data => {
             // this.bookings = data; // Assign the emitted value to user
             console.log(data);
@@ -45,10 +46,21 @@ export class KeeperBookingsComponent {
             console.error('Error fetching owner data', error);
           }
         );
+
     });
     
   }
 
+  onAccept(booking: Booking) {
+    this.userService.UpdateBooking(booking).subscribe(
+      data => {
+        console.log(data);
+      },
+      error => {
+        console.error('Error accepting booking', error);
+      }
+    );
+  }
 
 
   onLogout() {

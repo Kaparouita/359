@@ -49,6 +49,7 @@ func (server *Server) Initialize() {
 	keepers.Put("/:id", server.handler.UpdateKeeper)
 	keepers.Get("/:id", server.handler.GetKeeper)
 	keepers.Delete("/:id", server.handler.DeleteKeeper)
+	keepers.Get("/:id/bookings", server.handler.GetBookingsByKeeperId)
 
 	pets := app.Group("/pets")
 	pets.Get("/", server.handler.GetPets)
