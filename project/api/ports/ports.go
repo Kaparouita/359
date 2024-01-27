@@ -14,6 +14,8 @@ type Service interface {
 	UpdateOwner(owner *domain.Owner) *domain.Owner
 	GetOwner(owner *domain.Owner) *domain.Owner
 	DeleteOwner(owner *domain.Owner) *domain.Response
+	AvailableKeepers(id int) ([]domain.Keeper, error)
+	OrderClosestKeepers(owner *domain.Owner, orderBy string) ([]domain.Keeper, error)
 
 	RegisterKeeper(user *domain.Keeper) *domain.Keeper
 	GetKeepers() ([]domain.Keeper, error)
@@ -50,6 +52,7 @@ type Db interface {
 	UpdateOwner(owner *domain.Owner) error
 	GetOwner(owner *domain.Owner) error
 	DeleteOwner(owner *domain.Owner) error
+	AvailableKeepers(petsType []string) ([]domain.Keeper, error)
 
 	SaveKeeper(keeper *domain.Keeper) error
 	GetKeepers() ([]domain.Keeper, error)
@@ -86,6 +89,8 @@ type Handler interface {
 	GetOwner(c *fiber.Ctx) error
 	GetOwners(c *fiber.Ctx) error
 	DeleteOwner(c *fiber.Ctx) error
+	AvailableKeepers(c *fiber.Ctx) error
+	OrderClosestKeepers(c *fiber.Ctx) error
 
 	RegisterKeeper(c *fiber.Ctx) error
 	UpdateKeeper(c *fiber.Ctx) error

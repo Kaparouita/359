@@ -1,0 +1,7 @@
+.flex-item {
+    flex: 1; /* Adjust the flex-grow factor as needed */
+}
+
+p-dropdown, p-calendar {
+    width: 100%; /* Full width within their containers */
+}

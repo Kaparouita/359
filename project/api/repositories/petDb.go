@@ -46,6 +46,12 @@ func (db *Db) GetPets() ([]domain.Pet, error) {
 	return pets, err
 }
 
+func (db *Db) GetPetsByOwner(owner *domain.Owner) ([]domain.Pet, error) {
+	var pets []domain.Pet
+	err := db.Model(&domain.Pet{}).Where("owner_id = ?", owner.Id).Find(&pets).Error
+	return pets, err
+}
+
 func (db *Db) GetPet(pet *domain.Pet) error {
 	return db.Model(pet).Find(pet).Error
 }

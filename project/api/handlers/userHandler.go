@@ -4,6 +4,7 @@ import (
 	"359/domain"
 	"359/ports"
 	"encoding/json"
+	"fmt"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -188,7 +189,6 @@ func (handler *Handler) GetAdmin(c *fiber.Ctx) error {
 	return c.Status(resp.StatusCode).JSON(resp)
 }
 
-
 func (handler *Handler) Login(c *fiber.Ctx) error {
 	cred := &domain.LoginResp{}
 	err := json.Unmarshal(c.Body(), &cred)
@@ -219,3 +219,34 @@ func (handler *Handler) LoginAdmin(c *fiber.Ctx) error {
 	return c.Status(resp.StatusCode).JSON(resp)
 }
 
+func (handler *Handler) AvailableKeepers(c *fiber.Ctx) error {
+	id, err := c.ParamsInt("id") // owner id
+	if err != nil {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+	keepers, err := handler.Srv.AvailableKeepers(id)
+	if err != nil {
+		return c.Status(404).JSON(fmt.Sprintf("Unable to retrieve keepers: %v", err))
+	}
+
+	return c.Status(200).JSON(keepers)
+}
+
+func (handler *Handler) OrderClosestKeepers(c *fiber.Ctx) error {
+	id, err := c.ParamsInt("id") // owner id
+	if err != nil {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+	orderBy := c.Query("orderBy")
+	if orderBy == "" {
+		orderBy = "distance"
+	}
+	owner := &domain.Owner{}
+	owner.Id = uint(id)
+	keepers, err := handler.Srv.OrderClosestKeepers(owner, orderBy)
+	if err != nil {
+		return c.Status(404).JSON(fmt.Sprintf("Unable to retrieve keepers: %v", err))
+	}
+
+	return c.Status(200).JSON(keepers)
+}

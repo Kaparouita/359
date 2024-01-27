@@ -27,3 +27,12 @@ func (db *Db) GetBookings() ([]domain.Booking, error) {
 func (db *Db) DeleteBooking(booking *domain.Booking) error {
 	return db.DB.Delete(&booking).Error
 }
+
+func (db *Db) BookingStatus(keeper *domain.Keeper) *domain.Booking {
+	var booking domain.Booking
+	err := db.DB.Where("keeper_id = ? AND (status = ? OR status = ?)", keeper.Id, "accepted", "requested").First(&booking).Error
+	if err != nil {
+		return nil
+	}
+	return &booking
+}
