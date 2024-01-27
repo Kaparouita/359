@@ -28,6 +28,10 @@ export class UserServiceService {
     return this.http.get<User>(`http://127.0.0.1:3000/users/owners/` + id);
   }
 
+  getOwners() {
+    return this.http.get<User[]>(`http://127.0.0.1:3000/users/owners/`);
+  }
+
   getAvailableKeepers(id : number) {
     return this.http.get<User[]>(`http://127.0.0.1:3000/users/owners/` + id + `/findKeepers`);
   }
@@ -73,7 +77,7 @@ export class UserServiceService {
   }
 
   UpdateBooking(params: Booking) {
-    return this.http.put<Booking>(`http:////127.0.0.1:3000/users/keepers/` + params.keeper_id + `/bookings`,params);
+    return this.http.put<Booking>(`http:////127.0.0.1:3000/bookings/` +params.keeper_id ,params);
   }
 
   createBooking(book : Booking) {
