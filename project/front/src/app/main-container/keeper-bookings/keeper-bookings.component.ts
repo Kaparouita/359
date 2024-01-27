@@ -51,12 +51,34 @@ export class KeeperBookingsComponent {
   }
 
   onAccept(booking: Booking) {
+    if (booking.status !== 'requested') {
+      alert('You can only reject a requested booking');
+      return;
+    }
+    booking.status = 'accepted';
     this.userService.UpdateBooking(booking).subscribe(
       data => {
         console.log(data);
       },
       error => {
         console.error('Error accepting booking', error);
+      }
+    );
+  }
+
+  onReject(booking: Booking) {
+    if (booking.status !== 'requested') {
+      alert('You can only reject a requested booking');
+      return;
+    }
+    booking.status = 'rejected';
+
+    this.userService.UpdateBooking(booking).subscribe(
+      data => {
+        console.log(data);
+      },
+      error => {
+        console.error('Error rejecting booking', error);
       }
     );
   }
