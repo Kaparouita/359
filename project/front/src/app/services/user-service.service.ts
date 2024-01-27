@@ -53,4 +53,8 @@ export class UserServiceService {
   GetNumberOfDogs() {
     return this.http.get<number>(`http:////127.0.0.1:3000/admin/stats`);
   }
+
+  GetBookings(id: number) {
+    return this.http.get<number>(`http:////127.0.0.1:3000/keeper/` + id + `/bookings`);
+  }
 }

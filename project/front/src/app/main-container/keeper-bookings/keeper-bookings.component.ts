@@ -16,6 +16,7 @@ export class KeeperBookingsComponent {
 
   keeper = new User();
   booking = new Booking();
+  bookings : Booking[] = [];
   owner = new User();
   pet = new User();
 
@@ -34,8 +35,17 @@ export class KeeperBookingsComponent {
             console.error('Error fetching owner data', error);
           }
         );
+        this.userService.GetBookings(parseInt(userId || '0', 10)).subscribe(
+          data => {
+            this.bookings = data; // Assign the emitted value to user
+            console.log(data);
+          },
+          error => {
+            console.error('Error fetching owner data', error);
+          }
+        );
     });
-
+    
   }
 
 
