@@ -59,5 +59,15 @@ export class UserServiceService {
     return this.http.delete(`http:////127.0.0.1:3000/users/keepers/` + id);
   }
 
-  
+  GetNumberOfCats() {
+    return this.http.get<number>(`http:////127.0.0.1:3000/admin/stats`);
+  }
+
+  GetNumberOfDogs() {
+    return this.http.get<number>(`http:////127.0.0.1:3000/admin/stats`);
+  }
+
+  GetBookings(id: number) {
+    return this.http.get<number>(`http:////127.0.0.1:3000/keeper/` + id + `/bookings`);
+  }
 }
