@@ -48,6 +48,14 @@ func (srv *Service) GetBookings() ([]domain.Booking, error) {
 	return bookings, nil
 }
 
+func (srv *Service) GetBookingsByKeeperId(keeperId int) ([]domain.Booking, error) {
+	bookings, err := srv.db.GetBookingsByKeeperId(uint(keeperId))
+	if err != nil {
+		return nil, err
+	}
+	return bookings, nil
+}
+
 func (srv *Service) DeleteBooking(booking *domain.Booking) *domain.Response {
 	resp := &domain.Response{}
 	err := srv.db.DeleteBooking(booking)

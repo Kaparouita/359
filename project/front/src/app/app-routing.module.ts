@@ -30,6 +30,7 @@ const routes: Routes = [
   { path: 'owner/:user_id/add-pet', component: OwnerAddPetComponent ,canActivate: [AuthGuard]},
   { path: 'owner/:user_id/find-keeper', component: OwnerFindKeepersComponent ,canActivate: [AuthGuard]},
   
+  
 ];
 
 

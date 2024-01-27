@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 import { LoginResp } from '../models/login.model';
 import { Pet } from '../models/pet.model';
+import { Booking } from '../models/booking.model';
 
 @Injectable({
   providedIn: 'root',
@@ -67,7 +68,11 @@ export class UserServiceService {
     return this.http.get<number>(`http:////127.0.0.1:3000/admin/stats`);
   }
 
-  GetBookings(id: number) {
-    return this.http.get<number>(`http:////127.0.0.1:3000/keeper/` + id + `/bookings`);
+  GetBookingsByKeeperId(id: number) {
+    return this.http.get<Booking[]>(`http:////127.0.0.1:3000/users/keepers/` + id + `/bookings`);
+  }
+
+  UpdateBooking(params: Booking) {
+    return this.http.put<Booking>(`http:////127.0.0.1:3000/users/keepers/` + params.keeper_id + `/bookings`,params);
   }
 }
