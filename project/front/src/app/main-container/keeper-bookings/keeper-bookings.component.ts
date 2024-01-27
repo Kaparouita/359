@@ -19,6 +19,8 @@ export class KeeperBookingsComponent {
   owner = new User();
   pet = new User();
 
+  bookings: Booking[] = [];
+
   constructor(private authService : AuthService, private userService : UserServiceService,private route: ActivatedRoute, private datePipe: DatePipe) {}
 
 

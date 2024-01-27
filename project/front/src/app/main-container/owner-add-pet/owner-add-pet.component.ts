@@ -28,12 +28,12 @@ export class OwnerAddPetComponent {
       pet_id : ['1234567890'],
       owner_id: [this.owner_id, Validators.required],
       name: ['', Validators.required],
-      age: ['', Validators.required],
+      age: [0, Validators.required],
       type: ['', Validators.required], // Dropdown
       breed: ['', Validators.required],
       gender: ['', Validators.required],
-      birth_year: ['', Validators.required],
-      weight: ['', Validators.required],
+      birth_year: [0, Validators.required],
+      weight: [0, Validators.required],
       description: [''],
       photo: [''] // Optional
     });
@@ -44,14 +44,28 @@ export class OwnerAddPetComponent {
 
   onSubmit() {
     if (this.addPetForm.valid) {
-      var pet = new Pet(this.addPetForm.pet_id,this.addPetForm.owner_id,this.addPetForm.name)
-      console.log(pet);
+      const formValues = this.addPetForm.value;
+      var pet = new Pet(
+        formValues.pet_id,
+        formValues.owner_id,
+        formValues.name,
+        parseInt(formValues.age || '0', 10),
+        formValues.type,
+        formValues.breed,
+        formValues.gender,
+        parseInt(formValues.birth_year || '0', 10),
+        parseInt(formValues.weight || '0', 10),
+        formValues.description,
+        formValues.photo
+        )
       this.userService.addPet(pet).subscribe(
         (data) => {
           console.log(data);
+          alert('Pet added successfully');
         },
         (error) => {
           console.log(error);
+          alert('Error adding pet' + error.error.message || 'Server error');
         }
       );
     }
