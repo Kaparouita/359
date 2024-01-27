@@ -75,4 +75,8 @@ export class UserServiceService {
   createBooking(book : Booking) {
     return this.http.post<Booking>(`http:////127.0.0.1:3000/bookings/`, book);
   }
+
+  getOwnerBookings(id: number) {
+    return this.http.get<Booking[]>(`http:////127.0.0.1:3000/users/owners/` + id + `/bookings`);
+  }
 }

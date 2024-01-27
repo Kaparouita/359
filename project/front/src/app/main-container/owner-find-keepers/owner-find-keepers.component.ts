@@ -24,6 +24,7 @@ export class OwnerFindKeepersComponent {
     { label: 'Distance', value: 'distance' }
   ];
 
+  hasRequested: boolean = false;
   userId: number = 0;
   visible: boolean = false;
   message: string = '';
@@ -58,6 +59,19 @@ export class OwnerFindKeepersComponent {
           this.ownerPets = data.pets; 
           for (let pet of this.ownerPets) {
             this.petOptions.push(pet.name);
+          }
+        },
+        error => {
+          console.error('Error fetching owner data', error);
+        }
+      );
+      this.userService.getOwnerBookings(parseInt(userId || '0', 10)).subscribe(
+        data => {
+          for (let booking of data) {
+            if (booking.status === 'requested') {
+              this.hasRequested = true;
+              break;
+            }
           }
         },
         error => {
@@ -137,6 +151,10 @@ export class OwnerFindKeepersComponent {
   }
 
   book(keeperId: number,dogPrice: number,catPrice: number) {
+    if (this.hasRequested) {
+      alert('ERROR : You have already requested a booking');
+      return;
+    }
     if (this.selectedPetName === '') {
       alert('Please select a pet');
       return;

@@ -36,3 +36,9 @@ func (db *Db) BookingStatus(keeper *domain.Keeper) *domain.Booking {
 	}
 	return &booking
 }
+
+func (db *Db) GetBookingsByOwner(owner *domain.Owner) ([]domain.Booking, error) {
+	var bookings []domain.Booking
+	err := db.DB.Model(&domain.Booking{}).Where("owner_id = ?", owner.Id).Find(&bookings).Error
+	return bookings, err
+}

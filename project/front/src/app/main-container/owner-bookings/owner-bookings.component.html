@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Visitor page</title>
+</head>
+<body>
+    <div class="home">
+        <div class="card">
+            <p-table [value]="bookings" [tableStyle]="{ 'min-width': '50rem' }">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>ID</th>
+                        <th>owner id</th>
+                        <th>Pet ID</th>
+                        <th>Start date</th>
+                        <th>End date</th>
+                        <th>Price</th>
+                        <th>Status</th> 
+                        <th>Action</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-booking>
+                    <tr>
+                        <td>{{ booking.id }}</td>
+                        <td>{{ booking.owner_id }}</td>
+                        <td>{{ booking.pet_id }}</td>
+                        <td>{{ booking.start_date | date:'yyyy-MM-dd' }}</td>
+                        <td>{{ booking.end_date  | date:'yyyy-MM-dd' }}</td>
+                        <td>{{ booking.price }}</td>
+                        <td>{{ booking.status }}</td>
+                        <td>
+                            <button (click)="changeStatus(booking)">Finished</button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+          </div>
+  </div>
+</body>
+</html>

@@ -41,6 +41,7 @@ func (server *Server) Initialize() {
 	owners.Delete("/:id", server.handler.DeleteOwner)
 	owners.Get("/:id/findKeepers", server.handler.AvailableKeepers)
 	owners.Get("/:id/orderKeepers", server.handler.OrderClosestKeepers)
+	owners.Get("/:id/bookings", server.handler.GetBookingsByOwner)
 
 	keepers := users.Group("/keepers")
 	keepers.Get("/", server.handler.GetKeepers)

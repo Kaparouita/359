@@ -32,6 +32,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/dialog';
+import { OwnerBookingsComponent } from './main-container/owner-bookings/owner-bookings.component';
 
 
 
@@ -52,6 +53,7 @@ import { DialogModule } from 'primeng/dialog';
     OwnerHomeComponent,
     OwnerAddPetComponent,
     OwnerFindKeepersComponent,
+    OwnerBookingsComponent
   ],
   imports: [
     BrowserModule,

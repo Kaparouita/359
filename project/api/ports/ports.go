@@ -38,6 +38,7 @@ type Service interface {
 	UpdateBooking(booking *domain.Booking) *domain.Booking
 	GetBookings() ([]domain.Booking, error)
 	DeleteBooking(booking *domain.Booking) *domain.Response
+	GetBookingsByOwner(owner *domain.Owner) ([]domain.Booking, error)
 
 	GetAdmin(admin *domain.Admin) *domain.Admin
 	GetMoney() ([]int, error)
@@ -75,6 +76,7 @@ type Db interface {
 	UpdateBooking(booking *domain.Booking) error
 	GetBookings() ([]domain.Booking, error)
 	DeleteBooking(booking *domain.Booking) error
+	GetBookingsByOwner(owner *domain.Owner) ([]domain.Booking, error)
 
 	Login(cred *domain.LoginResp) error
 	LoginAdmin(cred *domain.LoginResp) error
@@ -113,6 +115,7 @@ type Handler interface {
 	GetBooking(c *fiber.Ctx) error
 	GetBookings(c *fiber.Ctx) error
 	DeleteBooking(c *fiber.Ctx) error
+	GetBookingsByOwner(c *fiber.Ctx) error
 
 	GetAdmin(c *fiber.Ctx) error
 	GetNumberOfCatsAndDogs(c *fiber.Ctx) error

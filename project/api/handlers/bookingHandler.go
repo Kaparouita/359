@@ -85,3 +85,20 @@ func (handler *Handler) DeleteBooking(c *fiber.Ctx) error {
 
 	return c.Status(resp.StatusCode).JSON(resp)
 }
+
+func (handler *Handler) GetBookingsByOwner(c *fiber.Ctx) error {
+	owner := &domain.Owner{}
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+
+	owner.Id = uint(id)
+
+	bookings, err := handler.Srv.GetBookingsByOwner(owner)
+	if err != nil {
+		return c.Status(500).JSON("Unable to get bookings")
+	}
+
+	return c.Status(200).JSON(bookings)
+}

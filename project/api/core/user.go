@@ -198,6 +198,14 @@ func (srv *Service) LoginAdmin(cred *domain.LoginResp) *domain.LoginResp {
 	return cred
 }
 
+func (srv *Service) GetBookingsByOwner(owner *domain.Owner) ([]domain.Booking, error) {
+	bookings, err := srv.db.GetBookingsByOwner(owner)
+	if err != nil {
+		return nil, err
+	}
+	return bookings, nil
+}
+
 type KeeperDistance struct {
 	Keeper domain.Keeper
 	Value  float64
