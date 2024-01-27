@@ -19,7 +19,7 @@ func (handler *Handler) CreateBooking(c *fiber.Ctx) error {
 		return c.Status(resp.StatusCode).JSON(resp.Message)
 	}
 
-	return c.SendStatus(resp.StatusCode)
+	return c.Status(resp.StatusCode).JSON(resp)
 }
 
 func (handler *Handler) UpdateBooking(c *fiber.Ctx) error {

@@ -45,6 +45,7 @@
                         <th>Space Description</th>
                         <th>Dog Price</th>
                         <th>Cat Price</th>
+                        <th>Book</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-keeper>
@@ -59,6 +60,30 @@
                         <td *ngIf="!keeper.dog_keep">-</td>
                         <td *ngIf="keeper.cat_keep">{{ keeper.cat_price * diffDays }}</td>
                         <td *ngIf="!keeper.cat_keep">-</td>
+                        <td>
+                            <div class="card flex justify-content-center">
+                                <p-button (click)="showDialog()" label="Book"></p-button>
+                                <p-dialog header="Header" [(visible)]="visible" [modal]="true" [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+                                    <ng-template pTemplate="header">
+                                        <div class="inline-flex align-items-center justify-content-center gap-2">
+                                            <label for="pet" class="font-bold block mb-2"> Choose your pet</label>
+                                            <p-dropdown [options]="petOptions" [(ngModel)]="selectedPetName" 
+                                                placeholder="Select a pet" (onChange)="onPetChange()" inputId="pet">
+                                            </p-dropdown>
+                                        </div>
+                                    </ng-template>
+                                    <div class="flex flex-row align-items-center">
+                                        <div class="flex-item p-mr-2">
+                                            <label for="message" class="font-bold block mb-2"> Message </label>
+                                            <input type="text" id="message" [(ngModel)]="message" placeholder="Enter your message for the keeper">
+                                        </div>
+                                    </div>
+                                    <ng-template pTemplate="footer">
+                                        <p-button icon="pi pi-check" (click)="book(keeper.id,keeper.dog_price,keeper.cat_price)" label="Ok" pAutoFocus [autofocus]="true"></p-button>
+                                    </ng-template>
+                                </p-dialog>
+                             </div>
+                        </td>
                     </tr>
                 </ng-template>
             </p-table>

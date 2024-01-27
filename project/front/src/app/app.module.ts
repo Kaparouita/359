@@ -31,6 +31,7 @@ import { ChartModule } from 'primeng/chart';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
+import { DialogModule } from 'primeng/dialog';
 
 
 
@@ -68,7 +69,8 @@ import { CalendarModule } from 'primeng/calendar';
     ChartModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    CalendarModule
+    CalendarModule,
+    DialogModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
