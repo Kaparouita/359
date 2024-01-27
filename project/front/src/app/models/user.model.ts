@@ -1,3 +1,5 @@
+import { Pet } from "./pet.model";
+
 export class User {
     id: number = 0 ;
     username: string;
@@ -22,6 +24,7 @@ export class User {
     space_desc: string = '';
     lat: number = 0;
     lon: number = 0;
+    pets: Pet[] = [];
 
     constructor(
         username: string = '',
@@ -39,7 +42,7 @@ export class User {
         job: string = '',
         phone: string = '',
         lat: number = 0,
-        lon: number = 0
+        lon: number = 0,
     ) {
         this.username = username;
         this.email = email;

@@ -28,6 +28,10 @@ export class UserServiceService {
     return this.http.get<User>(`http://127.0.0.1:3000/users/owners/` + id);
   }
 
+  getOwners() {
+    return this.http.get<User[]>(`http://127.0.0.1:3000/users/owners/`);
+  }
+
   getAvailableKeepers(id : number) {
     return this.http.get<User[]>(`http://127.0.0.1:3000/users/owners/` + id + `/findKeepers`);
   }
