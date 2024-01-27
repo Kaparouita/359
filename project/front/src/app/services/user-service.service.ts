@@ -27,6 +27,14 @@ export class UserServiceService {
     return this.http.get<User>(`http://127.0.0.1:3000/users/owners/` + id);
   }
 
+  getAvailableKeepers(id : number) {
+    return this.http.get<User[]>(`http://127.0.0.1:3000/users/owners/` + id + `/findKeepers`);
+  }
+
+  getOrderedKeepers(id : number, orderBy : string) {
+    return this.http.get<User[]>(`http://127.0.0.1:3000/users/owners/` + id + `/orderKeepers?orderBy=` + orderBy);
+  }
+
   getKeeper(id: number) {
     return this.http.get<User>(`http://127.0.0.1:3000/users/keepers/` + id);
   }

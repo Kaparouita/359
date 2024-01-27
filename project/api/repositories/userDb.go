@@ -3,6 +3,7 @@ package repositories
 import (
 	"359/domain"
 	"errors"
+	"strings"
 )
 
 func (db *Db) SaveOwner(user *domain.Owner) error {
@@ -30,11 +31,51 @@ func (db *Db) GetOwners() ([]domain.Owner, error) {
 }
 
 func (db *Db) GetOwner(user *domain.Owner) error {
-	return db.Model(user).Find(user).Error
+	err := db.Model(user).Find(user).Error
+	if err != nil {
+		return err
+	}
+	pets, _ := db.GetPetsByOwner(user)
+	user.Pets = pets
+	return nil
 }
 
 func (db *Db) DeleteOwner(user *domain.Owner) error {
 	return db.Delete(&domain.Owner{Id: user.Id}).Error
+}
+
+func (db *Db) AvailableKeepers(petsType []string) ([]domain.Keeper, error) {
+	var keepers []domain.Keeper
+	if len(petsType) == 0 {
+		return keepers, nil
+	}
+	for i := range petsType {
+		if strings.ToLower(petsType[i]) == "dog" {
+			var dogs []domain.Keeper
+			err := db.Model(&domain.Keeper{}).Where("dog_keep = ?", true).Find(&dogs).Error
+			if err != nil {
+				return nil, err
+			}
+			for i := range dogs {
+				if db.BookingStatus(&dogs[i]) == nil {
+					keepers = append(keepers, dogs[i])
+				}
+			}
+		}
+		if strings.ToLower(petsType[i]) == "cat" {
+			var cats []domain.Keeper
+			err := db.Model(&domain.Keeper{}).Where("cat_keep = ?", true).Find(&cats).Error
+			if err != nil {
+				return nil, err
+			}
+			for i := range cats {
+				if db.BookingStatus(&cats[i]) == nil {
+					keepers = append(keepers, cats[i])
+				}
+			}
+		}
+	}
+	return keepers, nil
 }
 
 func (db *Db) SaveKeeper(user *domain.Keeper) error {
@@ -106,4 +147,3 @@ func (db *Db) SaveAdmin(user *domain.Admin) error {
 	err := db.Create(user).Error
 	return err
 }
-

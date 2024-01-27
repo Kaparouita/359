@@ -18,7 +18,7 @@ func (srv *Service) GetBooking(booking *domain.Booking) *domain.Booking {
 }
 
 func (srv *Service) CreateBooking(booking *domain.Booking) *domain.Booking {
-	booking.Status = "pending"
+	booking.Status = "requested"
 	err := srv.db.SaveBooking(booking)
 	if err != nil {
 		booking.StatusCode = 400

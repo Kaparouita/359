@@ -25,10 +25,13 @@ import { VisitorFindKeepersComponent } from './main-container/visitor-find-keepe
 import { KeeperHomeComponent } from './main-container/keeper-home/keeper-home.component';
 import { OwnerHomeComponent } from './main-container/owner-home/owner-home.component';
 import { OwnerAddPetComponent } from './main-container/owner-add-pet/owner-add-pet.component';
+import { OwnerFindKeepersComponent } from './main-container/owner-find-keepers/owner-find-keepers.component';
 import { TableModule } from 'primeng/table';
 import { ChartModule } from 'primeng/chart';
-import { Chart } from 'chart.js';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CalendarModule } from 'primeng/calendar';
+
 
 
 
@@ -47,6 +50,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     KeeperHomeComponent,
     OwnerHomeComponent,
     OwnerAddPetComponent,
+    OwnerFindKeepersComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,6 +67,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     TableModule,
     ChartModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    CalendarModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
