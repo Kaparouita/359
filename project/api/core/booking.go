@@ -25,6 +25,7 @@ func (srv *Service) CreateBooking(booking *domain.Booking) *domain.Booking {
 		booking.Message = fmt.Sprintf("Couldnt create Booking : %v", err)
 		return booking
 	}
+
 	booking.StatusCode = 200
 	return booking
 }

@@ -58,7 +58,12 @@ export class OwnerBookingsComponent {
     this.visible = true;
   }
 
-  CreateReview(keeper_id: number, owner_id: number, booking_id: number) {
+  CreateReview(keeper_id: number, owner_id: number, booking_id: number,status : string) {
+    if (status !== 'finished') {
+      alert('You can only review completed bookings');
+      return;
+    }
+
     const review: Review = new Review();
     review.rating = this.value1;
     review.comment = this.reviewMessage;
