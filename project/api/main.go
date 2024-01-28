@@ -18,7 +18,7 @@ func main() {
 
 	db := repositories.NewDbRepo()
 	srv := core.NewService(db)
-	srv.InitFunction()
+	// srv.InitFunction()
 	handler := handlers.NewHandler(srv)
 	server := server.NewService(handler)
 

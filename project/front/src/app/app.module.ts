@@ -38,7 +38,7 @@ import { TagModule } from 'primeng/tag';
 import { RatingModule } from 'primeng/rating';
 import { EditorModule } from 'primeng/editor';
 import { OwnerMessagesComponent } from './main-container/owner-messages/owner-messages.component';
-
+import { KeeperMessagesComponent } from './main-container/keeper-messages/keeper-messages.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +59,7 @@ import { OwnerMessagesComponent } from './main-container/owner-messages/owner-me
     OwnerBookingsComponent,
     KeepersReviewComponent,
     OwnerMessagesComponent,
+    KeeperMessagesComponent
   ],
   imports: [
     BrowserModule,

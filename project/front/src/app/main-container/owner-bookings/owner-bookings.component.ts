@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Booking } from 'src/app/models/booking.model';
 import { UserServiceService } from 'src/app/services/user-service.service';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/user.model';
+import { Message } from 'src/app/models/message.model';
 import { Review } from 'src/app/models/review.model';
 
 @Component({
@@ -14,7 +16,9 @@ export class OwnerBookingsComponent {
 
   constructor(private userService: UserServiceService,private route: ActivatedRoute, private router: Router) {}
   visible: boolean = false;
+  messageVisible: boolean = false;
   message: string = '';
+  reviewMessage: string = '';
   bookings: Booking [] = [];
   value1!: number;
   ngOnInit(): void {
@@ -57,7 +61,7 @@ export class OwnerBookingsComponent {
   CreateReview(keeper_id: number, owner_id: number, booking_id: number) {
     const review: Review = new Review();
     review.rating = this.value1;
-    review.comment = this.message;
+    review.comment = this.reviewMessage;
     review.booking_id = booking_id;
     review.keeper_id = keeper_id;
     review.owner_id = owner_id;
@@ -65,15 +69,52 @@ export class OwnerBookingsComponent {
     this.userService.CreateReview(review).subscribe(
       data => {
         console.log(data);
-        this.message = 'Review created successfully';
-        this.showDialog();
+        this.reviewMessage = 'Review created successfully';
       },
       error => {
         console.error('Error creating review', error);
-        this.message = 'Error creating review';
-        this.showDialog();
+        this.reviewMessage = 'Error creating review';
       }
     );
   }
 
+  SendMessage(booking : Booking) {
+
+    this.userService.getOwner(booking.owner_id).subscribe(
+      data => {
+        const owner = data;
+        this.userService.getKeeper(booking.keeper_id).subscribe(
+          data => {
+           const  keeper = data;
+           var message = new Message(owner.username,keeper.username,this.message);
+            message.from_id = owner.id;
+            message.to_id = keeper.id;
+
+            this.userService.sendMessage(message).subscribe(
+              data => {
+                console.log(data);
+                this.message = 'Message sent successfully';
+                this.showDialog();
+              },
+              error => {
+                console.error('Error sending message', error);
+                this.message = 'Error sending message';
+                this.showDialog();
+              }
+            );
+          },
+          error => {
+            console.error('Error fetching keeper data', error);
+          }
+        );
+      },
+      error => {
+        console.error('Error fetching owner data', error);
+      }
+    );
+  }
+
+  showDialogMessage() {
+    this.messageVisible = true;
+  }
 }

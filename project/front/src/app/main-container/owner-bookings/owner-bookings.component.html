@@ -16,7 +16,9 @@
                         <th>End date</th>
                         <th>Price</th>
                         <th>Status</th> 
-                        <th>Action</th>
+                        <th>Finished</th>
+                        <th>Message</th>
+                        <th>Review</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-booking>
@@ -29,7 +31,23 @@
                         <td>{{ booking.price }}</td>
                         <td>{{ booking.status }}</td>
                         <td>
-                            <button (click)="changeStatus(booking)">Finished</button>
+                            <p-button (click)="changeStatus(booking)">Finished</p-button>
+                        </td>
+                        <td>
+                            <div class="card flex justify-content-center">
+                                <p-button (click)="showDialogMessage()" label="Message"></p-button>
+                                <p-dialog header="Header" [(visible)]="messageVisible" [modal]="true" [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+                                    <div class="flex flex-row align-items-center">
+                                        <div class="flex-item p-mr-2">
+                                            <label for="message" class="font-bold block mb-2"> Message </label>
+                                            <input type="text" id="message" [(ngModel)]="message" placeholder="Enter your message">
+                                        </div>
+                                    </div>
+                                    <ng-template pTemplate="footer">
+                                        <p-button icon="pi pi-check" (click)="SendMessage(booking)" label="Send" pAutoFocus [autofocus]="true"></p-button>
+                                    </ng-template>
+                                </p-dialog>
+                             </div>
                         </td>
                         <td>
                             <div class="card flex justify-content-center">
@@ -50,8 +68,8 @@
                                                 </ng-template>
                                                 </p-rating>
                                             </div>
-                                            <label for="message" class="font-bold block mb-2"> Message </label>
-                                            <input type="text" id="message" [(ngModel)]="message" placeholder="Enter your message for the keeper">
+                                            <label for="review" class="font-bold block mb-2"> Review </label>
+                                            <input type="text" id="review" [(ngModel)]="reviewMessage" placeholder="Review">
                                         </div>
                                     </div>
                                     <ng-template pTemplate="footer">

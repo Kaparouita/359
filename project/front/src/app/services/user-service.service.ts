@@ -98,6 +98,10 @@ export class UserServiceService {
     return this.http.get<User>(`http:////127.0.0.1:3000/users/keepers/` + id + `/reviews`);
   }
 
+  sendMessage(message : Message) {
+    return this.http.post<Message>(`http:////127.0.0.1:3000/messages`, message);
+  }
+
   getMessagesByName(name : string) {
     return this.http.get<Message[]>(`http:////127.0.0.1:3000/messages?name=` + name);
   }
