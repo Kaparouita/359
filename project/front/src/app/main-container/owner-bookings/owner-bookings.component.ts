@@ -21,6 +21,8 @@ export class OwnerBookingsComponent {
   reviewMessage: string = '';
   bookings: Booking [] = [];
   value1!: number;
+  owners : User[] = [];
+  keepers : User[] = [];
   ngOnInit(): void {
 
     this.route.paramMap.subscribe(params => {
@@ -35,6 +37,26 @@ export class OwnerBookingsComponent {
         }
       );
     });
+
+    this.userService.getOwners().subscribe(
+      data => {
+        this.owners = data; // Assign the emitted value to user
+        console.log(data);
+      },
+      error => {
+        console.error('Error fetching owner data', error);
+      }
+    );
+
+    this.userService.getKeepers().subscribe(
+      data => {
+        this.keepers = data; // Assign the emitted value to user
+        console.log(data);
+      },
+      error => {
+        console.error('Error fetching owner data', error);
+      }
+    );
   }
 
   changeStatus(booking: Booking) {
@@ -124,5 +146,25 @@ export class OwnerBookingsComponent {
 
   showDialogMessage() {
     this.messageVisible = true;
+  }
+
+  getOwnerName(id: number) {
+    return this.owners.find(o => o.id === id)?.first_name;
+  }
+
+  getKeeperName(id: number) {
+    return this.keepers.find(o => o.id === id)?.first_name;
+  }
+
+  getPetType(id: number) {
+    const owner = this.owners.find(o => o.id === id);
+    for (const pet of owner?.pets|| []) {
+      console.log(pet);
+      if (pet.id === id) {
+        
+        return pet.type;
+      }
+    }
+    return '';
   }
 }

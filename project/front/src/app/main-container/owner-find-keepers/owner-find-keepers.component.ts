@@ -171,7 +171,6 @@ export class OwnerFindKeepersComponent {
     this.userService.createBooking(book).subscribe(
       data => {
         alert('Booking successful');
-        console.log(data);
         this.visible = false;
       },
       error => {
