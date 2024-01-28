@@ -118,11 +118,11 @@ export class UserServiceService {
   }
 
   GetPetKeepersDays(id: number) {
-    return this.http.get<any>(`http:////127.0.0.1:3000/users/keepers/` + id + `/bookingsNumber`);
+    return this.http.get<number>(`http:////127.0.0.1:3000/users/keepers/` + id + `/petKeepersDays`);
   }
 
   GetPetKeepersBookings(id: number) {
-    return this.http.get<any>(`http:////127.0.0.1:3000/users/keepers/` + id + `/petKeepersDays`);
+    return this.http.get<number>(`http:////127.0.0.1:3000/users/keepers/` + id + `/bookingsNumber`);
   }
 
 }

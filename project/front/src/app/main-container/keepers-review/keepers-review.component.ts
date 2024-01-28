@@ -24,8 +24,8 @@ export class KeepersReviewComponent {
   user = new User();
   owners : User[] = [];
   reviews : any;
-  days: Days = {days: 0};
-  bookings: Bookings = {bookings: 0};
+  days: number = 0;
+  bookings: number = 0;
   constructor( private authService : AuthService,private userService : UserServiceService,private route: ActivatedRoute, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
@@ -35,7 +35,6 @@ export class KeepersReviewComponent {
       this.userService.GetReviewsByKeeper(parseInt(userId || '0', 10)).subscribe(
         data => {
           this.reviews = data; // Assign the emitted value to user
-          console.log(data);
         },
         error => {
           console.error('Error fetching keeper data', error);
@@ -66,7 +65,6 @@ export class KeepersReviewComponent {
     this.userService.getOwners().subscribe(
         data => {
           this.owners = data; // Assign the emitted value to user
-          console.log(data);
         },
         error => {
           console.error('Error fetching owner data', error);

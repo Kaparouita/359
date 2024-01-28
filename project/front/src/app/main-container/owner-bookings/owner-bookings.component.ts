@@ -42,7 +42,7 @@ export class OwnerBookingsComponent {
       alert('You can only change the status of accepted bookings');
       return;
     }else {
-      booking.status = 'completed';
+      booking.status = 'finished';
       this.userService.UpdateBooking(booking).subscribe(
         data => {
           console.log(data);

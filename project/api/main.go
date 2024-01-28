@@ -7,6 +7,8 @@ import (
 	"359/server"
 	"log"
 
+	"time"
+
 	"github.com/joho/godotenv"
 )
 
@@ -18,10 +20,11 @@ func main() {
 
 	db := repositories.NewDbRepo()
 	srv := core.NewService(db)
-	// srv.InitFunction()
 	handler := handlers.NewHandler(srv)
 	server := server.NewService(handler)
 
-	server.Initialize()
+	time.Sleep(1 * time.Second)
+	srv.InitFunction()
 
+	server.Initialize()
 }
