@@ -7,7 +7,7 @@
     align-items: center;
     padding: 20px;
     box-sizing: border-box;
-    background-image: url("../../../assets/home.jpg");
+    background-image: url("../../../assets/back.jpg");
     background-size: cover;
     background-position: center;
   }
@@ -16,6 +16,7 @@
     background-color: #727272;
     overflow: hidden;
     position: fixed;
+  
     top: 0;
     width: 100%;
   }

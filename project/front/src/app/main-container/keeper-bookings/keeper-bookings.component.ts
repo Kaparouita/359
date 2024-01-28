@@ -112,6 +112,7 @@ export class KeeperBookingsComponent {
         console.log(pet.type);
         return pet.type;
       }
+      
     }
     return '';
   }
