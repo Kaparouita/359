@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { UserServiceService } from '../../services/user-service.service';
 import { User } from '../../models/user.model';
+import { AuthService } from 'src/app/services/auth.service';
 
 interface Column {
   field: string;
@@ -15,7 +16,7 @@ interface Column {
 })
 export class AdminHomeComponent {
 
-  constructor(private userService : UserServiceService) {}
+  constructor(private userService : UserServiceService , private authService : AuthService) {}
   users: User[] = []; 
 
   ngOnInit(): void {
@@ -64,4 +65,10 @@ export class AdminHomeComponent {
       );
     }
   }
+
+
+  onLogout() {
+    this.authService.logout();
+  }
+
 }

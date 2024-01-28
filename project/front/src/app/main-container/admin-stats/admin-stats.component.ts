@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from 'src/app/services/admin.service';
 import { ChartModule } from 'primeng/chart';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 interface petCount{
@@ -25,7 +26,7 @@ interface money{
 })
 export class AdminStatsComponent implements OnInit{
 
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService, private authService : AuthService) {}
 
   petCount: petCount = {cats: 0, dogs: 0};
   userCount: userCount = {owners: 0, keepers: 0};
@@ -172,6 +173,9 @@ export class AdminStatsComponent implements OnInit{
                 }
             }
         };
+    }
+    onLogout() {
+        this.authService.logout();
     }
 }
 
