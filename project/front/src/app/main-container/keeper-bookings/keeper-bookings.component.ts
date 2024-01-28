@@ -7,7 +7,7 @@ import { User } from 'src/app/models/user.model';
 import { Booking } from 'src/app/models/booking.model';
 import { Pet } from 'src/app/models/pet.model';
 import { Observable } from 'rxjs';
-
+import { Message } from 'src/app/models/message.model';
 
 @Component({
   selector: 'app-keeper-bookings',
@@ -16,6 +16,8 @@ import { Observable } from 'rxjs';
 })
 export class KeeperBookingsComponent {
 
+  message: string = '';
+  messageVisible: boolean = false;
   keeper = new User();
   owner = new User();
   owners : User[] = [];
@@ -114,6 +116,46 @@ export class KeeperBookingsComponent {
     return '';
   }
 
+  SendMessage(booking : Booking) {
+    if (booking.status !== 'accepted') {
+      alert('You can only send messages to accepted bookings');
+      return;
+    }
+    this.userService.getOwner(booking.owner_id).subscribe(
+      data => {
+        const owner = data;
+        this.userService.getKeeper(booking.keeper_id).subscribe(
+          data => {
+           const  keeper = data;
+           var message = new Message(keeper.username,owner.username,this.message);
+            message.from_id = keeper.id;
+            message.to_id =  owner.id;
+
+            this.userService.sendMessage(message).subscribe(
+              data => {
+                console.log(data);
+                alert('Message sent successfully');
+              },
+              error => {
+                console.error('Error sending message', error);
+                alert('Error sending message');
+              }
+            );
+          },
+          error => {
+            console.error('Error fetching keeper data', error);
+          }
+        );
+      },
+      error => {
+        console.error('Error fetching owner data', error);
+      }
+    );
+  }
+
+  showDialogMessage() {
+    this.messageVisible = true;
+  }
 
   onLogout() {
     this.authService.logout();

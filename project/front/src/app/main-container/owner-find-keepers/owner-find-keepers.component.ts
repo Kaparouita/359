@@ -174,6 +174,7 @@ export class OwnerFindKeepersComponent {
       data => {
         alert('Booking successful');
         console.log(data);
+        this.visible = false;
       },
       error => {
         console.error('Error booking keeper', error);

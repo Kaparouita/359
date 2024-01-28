@@ -69,17 +69,21 @@ export class OwnerBookingsComponent {
     this.userService.CreateReview(review).subscribe(
       data => {
         console.log(data);
-        this.reviewMessage = 'Review created successfully';
+        alert('Review created successfully');
+        this.visible = false;
       },
       error => {
         console.error('Error creating review', error);
-        this.reviewMessage = 'Error creating review';
+        alert('Error creating review');
       }
     );
   }
 
   SendMessage(booking : Booking) {
-
+    if (booking.status !== 'accepted') {
+      alert('You can only send messages to accepted bookings');
+      return;
+    }
     this.userService.getOwner(booking.owner_id).subscribe(
       data => {
         const owner = data;
@@ -93,13 +97,12 @@ export class OwnerBookingsComponent {
             this.userService.sendMessage(message).subscribe(
               data => {
                 console.log(data);
-                this.message = 'Message sent successfully';
-                this.showDialog();
+                alert('Message sent successfully');
+                this.messageVisible = false;
               },
               error => {
                 console.error('Error sending message', error);
-                this.message = 'Error sending message';
-                this.showDialog();
+                alert('Error sending message');
               }
             );
           },
