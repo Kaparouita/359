@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Booking } from 'src/app/models/booking.model';
 import { UserServiceService } from 'src/app/services/user-service.service';
 import { Router } from '@angular/router';
+import { Review } from 'src/app/models/review.model';
 
 @Component({
   selector: 'app-owner-bookings',
@@ -12,8 +13,10 @@ import { Router } from '@angular/router';
 export class OwnerBookingsComponent {
 
   constructor(private userService: UserServiceService,private route: ActivatedRoute, private router: Router) {}
-
+  visible: boolean = false;
+  message: string = '';
   bookings: Booking [] = [];
+  value1!: number;
   ngOnInit(): void {
 
     this.route.paramMap.subscribe(params => {
@@ -47,10 +50,30 @@ export class OwnerBookingsComponent {
     }
   }
 
-  Review(booking: Booking) {
-    // Perform any necessary logic
-    
-    // Navigate to another route
-    this.router.navigate(['/review/:booking_id']);
+  showDialog() {
+    this.visible = true;
   }
+
+  CreateReview(keeper_id: number, owner_id: number, booking_id: number) {
+    const review: Review = new Review();
+    review.rating = this.value1;
+    review.comment = this.message;
+    review.booking_id = booking_id;
+    review.keeper_id = keeper_id;
+    review.owner_id = owner_id;
+
+    this.userService.CreateReview(review).subscribe(
+      data => {
+        console.log(data);
+        this.message = 'Review created successfully';
+        this.showDialog();
+      },
+      error => {
+        console.error('Error creating review', error);
+        this.message = 'Error creating review';
+        this.showDialog();
+      }
+    );
+  }
+
 }

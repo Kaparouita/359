@@ -13,7 +13,6 @@ import { AuthGuard } from './services/auth.guard';
 import { OwnerAddPetComponent } from './main-container/owner-add-pet/owner-add-pet.component';
 import { OwnerFindKeepersComponent } from './main-container/owner-find-keepers/owner-find-keepers.component';
 import { OwnerBookingsComponent } from './main-container/owner-bookings/owner-bookings.component';
-import { OwnerReviewComponent } from './main-container/owner-review/owner-review.component';
 import { KeepersReviewComponent } from './main-container/keepers-review/keepers-review.component';
 import { OwnerMessagesComponent } from './main-container/owner-messages/owner-messages.component';
 

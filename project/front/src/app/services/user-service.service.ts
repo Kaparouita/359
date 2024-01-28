@@ -6,6 +6,7 @@ import { LoginResp } from '../models/login.model';
 import { Pet } from '../models/pet.model';
 import { Booking } from '../models/booking.model';
 import { Message } from '../models/message.model';
+import { Review } from '../models/review.model';
 
 @Injectable({
   providedIn: 'root',
@@ -96,9 +97,17 @@ export class UserServiceService {
   getMessagesByName(name : string) {
     return this.http.get<Message[]>(`http:////127.0.0.1:3000/messages?name=` + name);
   }
+  GetBooking( id: number) {
+    return this.http.get<Booking>(`http:////127.0.0.1:3000/bookings/` + id);
+  }
 
   createMessage(message : Message) {
     return this.http.post<Message>(`http:////127.0.0.1:3000/messages`, message);
   }
+
+  CreateReview(review : Review) {
+    return this.http.post<Review>(`http:////127.0.0.1:3000/reviews/` ,review);
+  }
+
 
 }
