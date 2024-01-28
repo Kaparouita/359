@@ -308,3 +308,19 @@ func constructURL(lat1, lon1, lat2, lon2 float64) string {
 
 	return fmt.Sprintf("%s?origins=%s&destinations=%s", baseUrl, url.QueryEscape(origins), url.QueryEscape(destinations))
 }
+
+func (srv *Service) CreateReview(review *domain.Review) *domain.Review {
+	err := srv.db.CreateReview(review)
+	if err != nil {
+		review.Comment = fmt.Sprintf("Couldnt create review : %v", err)
+	}
+	return review
+}
+
+func (srv *Service) GetReviewsByKeeper(keeper *domain.Keeper) ([]domain.Review, error) {
+	reviews, err := srv.db.GetReviewsByKeeper(keeper)
+	if err != nil {
+		return nil, err
+	}
+	return reviews, nil
+}

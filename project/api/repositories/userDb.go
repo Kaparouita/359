@@ -27,7 +27,12 @@ func (db *Db) UpdateOwner(user *domain.Owner) error {
 func (db *Db) GetOwners() ([]domain.Owner, error) {
 	var users []domain.Owner
 	err := db.Find(&users).Error
+	for i := range users {
+		pets, _ := db.GetPetsByOwner(&users[i])
+		users[i].Pets = pets
+	}
 	return users, err
+
 }
 
 func (db *Db) GetOwner(user *domain.Owner) error {
@@ -146,4 +151,15 @@ func (db *Db) GetAdmin(user *domain.Admin) error {
 func (db *Db) SaveAdmin(user *domain.Admin) error {
 	err := db.Create(user).Error
 	return err
+}
+
+func (db *Db) CreateReview(review *domain.Review) error {
+	err := db.Create(review).Error
+	return err
+}
+
+func (db *Db) GetReviewsByKeeper(keeper *domain.Keeper) ([]domain.Review, error) {
+	var reviews []domain.Review
+	err := db.Model(&domain.Review{}).Where("keeper_id = ?", keeper.Id).Find(&reviews).Error
+	return reviews, err
 }

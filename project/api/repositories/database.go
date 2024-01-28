@@ -41,11 +41,14 @@ func connectDb() (*gorm.DB, error) {
 
 	//Create the tables
 	db.AutoMigrate(
-		&domain.Owner{},
-		&domain.Keeper{},
+		&domain.Pet{},
+		&domain.Review{},
 		&domain.Admin{},
 		&domain.Booking{},
-		&domain.Pet{},
+	)
+	db.AutoMigrate(
+		&domain.Owner{},
+		&domain.Keeper{},
 	)
 	return db, nil
 }

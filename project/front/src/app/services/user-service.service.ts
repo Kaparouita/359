@@ -87,4 +87,10 @@ export class UserServiceService {
   getOwnerBookings(id: number) {
     return this.http.get<Booking[]>(`http:////127.0.0.1:3000/users/owners/` + id + `/bookings`);
   }
+
+  GetReviewsByKeeper(id: number) {
+    return this.http.get<User>(`http:////127.0.0.1:3000/users/keepers/` + id + `/reviews`);
+  }
+
+
 }

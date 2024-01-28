@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Booking } from 'src/app/models/booking.model';
 import { UserServiceService } from 'src/app/services/user-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-owner-bookings',
@@ -10,10 +11,9 @@ import { UserServiceService } from 'src/app/services/user-service.service';
 })
 export class OwnerBookingsComponent {
 
-  constructor(private userService: UserServiceService,private route: ActivatedRoute) {}
+  constructor(private userService: UserServiceService,private route: ActivatedRoute, private router: Router) {}
 
   bookings: Booking [] = [];
-
   ngOnInit(): void {
 
     this.route.paramMap.subscribe(params => {
@@ -34,6 +34,23 @@ export class OwnerBookingsComponent {
     if (booking.status !== 'accepted') {
       alert('You can only change the status of accepted bookings');
       return;
+    }else {
+      booking.status = 'completed';
+      this.userService.UpdateBooking(booking).subscribe(
+        data => {
+          console.log(data);
+        },
+        error => {
+          console.error('Error updating booking', error);
+        }
+      );
     }
+  }
+
+  Review(booking: Booking) {
+    // Perform any necessary logic
+    
+    // Navigate to another route
+    this.router.navigate(['/review/:booking_id']);
   }
 }

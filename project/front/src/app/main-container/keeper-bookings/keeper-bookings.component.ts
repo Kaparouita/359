@@ -41,7 +41,7 @@ export class KeeperBookingsComponent {
         );
         this.userService.GetBookingsByKeeperId(parseInt(userId || '0', 10)).subscribe(
           data => {
-            // this.bookings = data; // Assign the emitted value to user
+             this.bookings = data; // Assign the emitted value to user
             console.log(data);
           },
           error => {
@@ -103,9 +103,10 @@ export class KeeperBookingsComponent {
 
   getPetType(id: number) {
     const owner = this.owners.find(o => o.id === id);
-    console.log(owner?.pets);
     for (const pet of owner?.pets|| []) {
+      console.log(pet);
       if (pet.id === id) {
+        
         return pet.type;
       }
     }

@@ -250,3 +250,33 @@ func (handler *Handler) OrderClosestKeepers(c *fiber.Ctx) error {
 
 	return c.Status(200).JSON(keepers)
 }
+
+func (handler *Handler) CreateReview(c *fiber.Ctx) error {
+	review := &domain.Review{}
+	err := json.Unmarshal(c.Body(), &review)
+
+	if err != nil {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+
+	resp := handler.Srv.CreateReview(review)
+	if resp == nil {
+		return c.Status(400).JSON("Unable to create review")
+	}
+
+	return c.Status(200).JSON(resp)
+}
+
+func (handler *Handler) GetReviewsByKeeper(c *fiber.Ctx) error {
+	id, err := c.ParamsInt("id") // keeper id
+	if err != nil {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+	keeper := &domain.Keeper{Id: uint(id)}
+	reviews, err := handler.Srv.GetReviewsByKeeper(keeper)
+	if err != nil {
+		return c.Status(404).JSON(fmt.Sprintf("Unable to retrieve reviews: %v", err))
+	}
+
+	return c.Status(200).JSON(reviews)
+}

@@ -33,7 +33,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/dialog';
 import { OwnerBookingsComponent } from './main-container/owner-bookings/owner-bookings.component';
-
+import { OwnerReviewComponent } from './main-container/owner-review/owner-review.component';
+import { KeepersReviewComponent } from './main-container/keepers-review/keepers-review.component';
+import { TagModule } from 'primeng/tag';
+import { RatingModule } from 'primeng/rating';
+import { EditorModule } from 'primeng/editor';
 
 
 
@@ -53,7 +57,9 @@ import { OwnerBookingsComponent } from './main-container/owner-bookings/owner-bo
     OwnerHomeComponent,
     OwnerAddPetComponent,
     OwnerFindKeepersComponent,
-    OwnerBookingsComponent
+    OwnerBookingsComponent,
+    KeepersReviewComponent,
+    OwnerReviewComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +78,10 @@ import { OwnerBookingsComponent } from './main-container/owner-bookings/owner-bo
     ReactiveFormsModule,
     BrowserAnimationsModule,
     CalendarModule,
-    DialogModule
+    DialogModule,
+    TagModule,
+    RatingModule,
+    EditorModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

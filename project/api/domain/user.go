@@ -61,7 +61,17 @@ type Keeper struct {
 	SpaceDesc string    `json:"space_desc"`
 	Lat       float64   `json:"lat"`
 	Lon       float64   `json:"lon"`
+	Reviews   []Review  `json:"reviews" gorm:"foreignKey:KeeperId;constraint:OnDelete:CASCADE;"`
 	Response
+}
+
+type Review struct {
+	Id        uint      `json:"id" gorm:"primaryKey"`
+	CreatedAt time.Time `json:"created_at"`
+	OwnerId   uint      `json:"owner_id"`
+	KeeperId  uint      `json:"keeper_id"`
+	Comment   string    `json:"comment"`
+	Rating    int       `json:"rating"`
 }
 
 type UserPerType struct {

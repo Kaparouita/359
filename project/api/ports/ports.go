@@ -46,6 +46,9 @@ type Service interface {
 
 	Login(cred *domain.LoginResp) *domain.LoginResp
 	LoginAdmin(cred *domain.LoginResp) *domain.LoginResp
+
+	CreateReview(review *domain.Review) *domain.Review
+	GetReviewsByKeeper(keeper *domain.Keeper) ([]domain.Review, error)
 }
 
 type Db interface {
@@ -85,6 +88,9 @@ type Db interface {
 
 	GetAdmin(admin *domain.Admin) error
 	SaveAdmin(admin *domain.Admin) error
+
+	CreateReview(review *domain.Review) error
+	GetReviewsByKeeper(keeper *domain.Keeper) ([]domain.Review, error)
 }
 
 type Handler interface {
@@ -127,4 +133,7 @@ type Handler interface {
 
 	Login(c *fiber.Ctx) error
 	LoginAdmin(c *fiber.Ctx) error
+
+	CreateReview(c *fiber.Ctx) error
+	GetReviewsByKeeper(c *fiber.Ctx) error
 }

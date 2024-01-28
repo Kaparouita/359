@@ -50,6 +50,7 @@ func (server *Server) Initialize() {
 	keepers.Get("/:id", server.handler.GetKeeper)
 	keepers.Delete("/:id", server.handler.DeleteKeeper)
 	keepers.Get("/:id/bookings", server.handler.GetBookingsByKeeperId)
+	keepers.Get("/:id/reviews", server.handler.GetReviewsByKeeper)
 
 	pets := app.Group("/pets")
 	pets.Get("/", server.handler.GetPets)
@@ -66,6 +67,9 @@ func (server *Server) Initialize() {
 	bookings.Put("/:id", server.handler.UpdateBooking)
 	bookings.Get("/:id", server.handler.GetBooking)
 	bookings.Delete("/:id", server.handler.DeleteBooking)
+
+	reviews := app.Group("/reviews")
+	reviews.Post("/", server.handler.CreateReview)
 
 	app.Delete("petDeletion/:pet_id", server.handler.DeletePet)
 	app.Put("petWeight/:pet_id/:weight", server.handler.UpdatePetWeight)
