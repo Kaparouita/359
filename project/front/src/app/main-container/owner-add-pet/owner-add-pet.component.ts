@@ -18,6 +18,11 @@ export class OwnerAddPetComponent {
   constructor(private fb: FormBuilder,private route: ActivatedRoute,private userService: UserServiceService) { }
 
   ngOnInit() {
+    // Generate a random 10-digit string
+    const randomString = Math.floor(Math.random() * 9000000000) + 1000000000;
+    const randomStringWithDigits = randomString.toString();
+    console.log(randomStringWithDigits);
+      
     // Initialize the form
     this.route.paramMap.subscribe(params => {
       const userId = params.get('user_id') ;
@@ -25,7 +30,7 @@ export class OwnerAddPetComponent {
     });
 
     this.addPetForm = this.fb.group({
-      pet_id : ['1234567890'],
+      pet_id : [randomStringWithDigits],
       owner_id: [this.owner_id, Validators.required],
       name: ['', Validators.required],
       age: [0, Validators.required],
@@ -39,7 +44,6 @@ export class OwnerAddPetComponent {
     });
 
   }
-
 
 
   onSubmit() {
@@ -65,7 +69,7 @@ export class OwnerAddPetComponent {
         },
         (error) => {
           console.log(error);
-          alert('Error adding pet' + error.error.message || 'Server error');
+          alert('Error adding pet' + error.message);
         }
       );
     }

@@ -17,7 +17,6 @@ import { Observable } from 'rxjs';
 export class KeeperBookingsComponent {
 
   keeper = new User();
-  booking = new Booking();
   owner = new User();
   owners : User[] = [];
   pet = new Pet();
@@ -69,6 +68,8 @@ export class KeeperBookingsComponent {
       return;
     }
     booking.status = 'accepted';
+    console.log(booking);
+
     this.userService.UpdateBooking(booking).subscribe(
       data => {
         console.log(data);

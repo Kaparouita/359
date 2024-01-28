@@ -13,10 +13,5 @@ type Booking struct {
 	EndDate   time.Time `json:"end_date"`
 	Price     int       `json:"price"`
 	Status    string    `json:"status"`
-
-	Owner  Owner  `gorm:"foreignKey:OwnerId"`
-	Keeper Keeper `gorm:"foreignKey:KeeperId"`
-	Pet    Pet    `gorm:"foreignKey:PetId"`
-
 	Response
 }

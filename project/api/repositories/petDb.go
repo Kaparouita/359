@@ -16,7 +16,6 @@ func (db *Db) SavePet(pet *domain.Pet) error {
 	var owner domain.Owner
 	err := db.Model(&owner).Where("id = ?", pet.OwnerId).First(&owner).Error
 	if err != nil {
-
 		return errors.New("pet owner does not exist")
 	}
 

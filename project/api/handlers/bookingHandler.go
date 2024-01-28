@@ -24,16 +24,10 @@ func (handler *Handler) CreateBooking(c *fiber.Ctx) error {
 
 func (handler *Handler) UpdateBooking(c *fiber.Ctx) error {
 	booking := &domain.Booking{}
-	id, err := c.ParamsInt("id")
+	err := json.Unmarshal(c.Body(), &booking)
 	if err != nil {
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
-
-	err = json.Unmarshal(c.Body(), &booking)
-	if err != nil {
-		return c.SendStatus(fiber.StatusBadRequest)
-	}
-	booking.Id = uint(id)
 
 	resp := handler.Srv.UpdateBooking(booking)
 	if resp.StatusCode != 201 {

@@ -38,7 +38,7 @@ import { KeepersReviewComponent } from './main-container/keepers-review/keepers-
 import { TagModule } from 'primeng/tag';
 import { RatingModule } from 'primeng/rating';
 import { EditorModule } from 'primeng/editor';
-
+import { OwnerMessagesComponent } from './main-container/owner-messages/owner-messages.component';
 
 
 @NgModule({
@@ -59,7 +59,8 @@ import { EditorModule } from 'primeng/editor';
     OwnerFindKeepersComponent,
     OwnerBookingsComponent,
     KeepersReviewComponent,
-    OwnerReviewComponent
+    OwnerReviewComponent,
+    OwnerMessagesComponent
   ],
   imports: [
     BrowserModule,

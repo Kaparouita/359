@@ -41,6 +41,9 @@ type Service interface {
 	GetBookingsByOwner(owner *domain.Owner) ([]domain.Booking, error)
 	GetBookingsByKeeperId(keeperId int) ([]domain.Booking, error)
 
+	CreateMessage(message *domain.Message) *domain.Message
+	GetMessagesByUsername(username string) ([]domain.Message, error)
+
 	GetAdmin(admin *domain.Admin) *domain.Admin
 	GetMoney() ([]int, error)
 
@@ -82,6 +85,9 @@ type Db interface {
 	DeleteBooking(booking *domain.Booking) error
 	GetBookingsByOwner(owner *domain.Owner) ([]domain.Booking, error)
 	GetBookingsByKeeperId(id uint) ([]domain.Booking, error)
+
+	CreateMessage(message *domain.Message) error
+	GetMessagesByUsername(username string) ([]domain.Message, error)
 
 	Login(cred *domain.LoginResp) error
 	LoginAdmin(cred *domain.LoginResp) error
@@ -130,6 +136,9 @@ type Handler interface {
 	GetNumberOfCatsAndDogs(c *fiber.Ctx) error
 	GetMoney(c *fiber.Ctx) error
 	GetNumberOfUsers(c *fiber.Ctx) error
+
+	CreateMessage(c *fiber.Ctx) error
+	GetMessagesByUsername(c *fiber.Ctx) error
 
 	Login(c *fiber.Ctx) error
 	LoginAdmin(c *fiber.Ctx) error

@@ -15,7 +15,7 @@ func (db *Db) SaveBooking(booking *domain.Booking) error {
 }
 
 func (db *Db) UpdateBooking(booking *domain.Booking) error {
-	return db.DB.Save(&booking).Error
+	return db.DB.Model(domain.Booking{}).Where("id = ?", booking.Id).Update("status", booking.Status).Error
 }
 
 func (db *Db) GetBookings() ([]domain.Booking, error) {

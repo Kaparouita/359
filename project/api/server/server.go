@@ -71,6 +71,10 @@ func (server *Server) Initialize() {
 	reviews := app.Group("/reviews")
 	reviews.Post("/", server.handler.CreateReview)
 
+	messages := app.Group("/messages")
+	messages.Post("/", server.handler.CreateMessage)
+	messages.Get("/", server.handler.GetMessagesByUsername)
+
 	app.Delete("petDeletion/:pet_id", server.handler.DeletePet)
 	app.Put("petWeight/:pet_id/:weight", server.handler.UpdatePetWeight)
 

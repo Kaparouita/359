@@ -20,7 +20,8 @@ func (handler *Handler) RegisterPet(c *fiber.Ctx) error {
 	if resp.StatusCode != 200 {
 		return c.Status(resp.StatusCode).JSON(resp.Message)
 	}
-	return c.SendStatus(resp.StatusCode)
+	resp.Message = "Registered pet successfully"
+	return c.Status(resp.StatusCode).JSON(resp.Message)
 }
 
 func (handler *Handler) UpdatePet(c *fiber.Ctx) error {
