@@ -13,7 +13,6 @@ import { AuthGuard } from './services/auth.guard';
 import { OwnerAddPetComponent } from './main-container/owner-add-pet/owner-add-pet.component';
 import { OwnerFindKeepersComponent } from './main-container/owner-find-keepers/owner-find-keepers.component';
 import { OwnerBookingsComponent } from './main-container/owner-bookings/owner-bookings.component';
-import { OwnerReviewComponent } from './main-container/owner-review/owner-review.component';
 import { KeepersReviewComponent } from './main-container/keepers-review/keepers-review.component';
 
 const routes: Routes = [
@@ -33,8 +32,7 @@ const routes: Routes = [
   { path: 'owner/:user_id/add-pet', component: OwnerAddPetComponent ,canActivate: [AuthGuard]},
   { path: 'owner/:user_id/find-keeper', component: OwnerFindKeepersComponent ,canActivate: [AuthGuard]},
   { path: 'owner/:user_id/bookings', component: OwnerBookingsComponent ,canActivate: [AuthGuard]},
-  { path: 'keeper/:user_id/reviews', component: KeepersReviewComponent ,canActivate: [AuthGuard]},
-  { path: 'owner/:user_id/reviews', component: OwnerReviewComponent ,canActivate: [AuthGuard]}
+  { path: 'keeper/:user_id/reviews', component: KeepersReviewComponent ,canActivate: [AuthGuard]}
   
 ];
 

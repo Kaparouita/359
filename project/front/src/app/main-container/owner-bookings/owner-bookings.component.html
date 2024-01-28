@@ -32,7 +32,34 @@
                             <button (click)="changeStatus(booking)">Finished</button>
                         </td>
                         <td>
-                            <button (click)="Review(booking)">Leave Review</button>
+                            <div class="card flex justify-content-center">
+                                <p-button (click)="showDialog()" label="Review"></p-button>
+                                <p-dialog header="Header" [(visible)]="visible" [modal]="true" [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+                                    <div class="flex flex-row align-items-center">
+                                        <div class="flex-item p-mr-2">
+                                            <div class="card flex justify-content-center" >
+                                                <p-rating [(ngModel)]="value1" [stars]="5">
+                                                <ng-template pTemplate="cancelicon">
+                                                    <img src="https://primefaces.org/cdn/primeng/images/demo/rating/cancel.png" width="25px" height="25px" />
+                                                </ng-template>
+                                                <ng-template pTemplate="onicon">
+                                                    <img src="https://primefaces.org/cdn/primeng/images/demo/rating/custom-icon-active.png" width="25px" height="25px" />
+                                                </ng-template>
+                                                <ng-template pTemplate="officon">
+                                                    <img src="https://primefaces.org/cdn/primeng/images/demo/rating/custom-icon.png" width="25px" height="25px" />
+                                                </ng-template>
+                                                </p-rating>
+                                            </div>
+                                            <label for="message" class="font-bold block mb-2"> Message </label>
+                                            <input type="text" id="message" [(ngModel)]="message" placeholder="Enter your message for the keeper">
+                                        </div>
+                                    </div>
+                                    <ng-template pTemplate="footer">
+                                        <p-button icon="pi pi-check" (click)="CreateReview(booking.keeper_id, booking.owner_id, booking.id)" label="Ok" pAutoFocus [autofocus]="true"></p-button>
+                                    </ng-template>
+                                </p-dialog>
+                             </div>
+                        </td>
                     </tr>
                 </ng-template>
             </p-table>

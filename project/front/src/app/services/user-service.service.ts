@@ -5,6 +5,7 @@ import { User } from '../models/user.model';
 import { LoginResp } from '../models/login.model';
 import { Pet } from '../models/pet.model';
 import { Booking } from '../models/booking.model';
+import { Review } from '../models/review.model';
 
 @Injectable({
   providedIn: 'root',
@@ -90,6 +91,14 @@ export class UserServiceService {
 
   GetReviewsByKeeper(id: number) {
     return this.http.get<User>(`http:////127.0.0.1:3000/users/keepers/` + id + `/reviews`);
+  }
+
+  GetBooking( id: number) {
+    return this.http.get<Booking>(`http:////127.0.0.1:3000/bookings/` + id);
+  }
+
+  CreateReview(review : Review) {
+    return this.http.post<Review>(`http:////127.0.0.1:3000/reviews/` ,review);
   }
 
 
