@@ -34,7 +34,6 @@ const routes: Routes = [
   { path: 'owner/:user_id/find-keeper', component: OwnerFindKeepersComponent ,canActivate: [AuthGuard]},
   { path: 'owner/:user_id/bookings', component: OwnerBookingsComponent ,canActivate: [AuthGuard]},
   { path: 'keeper/:user_id/reviews', component: KeepersReviewComponent ,canActivate: [AuthGuard]},
-  { path: 'owner/:user_id/reviews', component: OwnerReviewComponent ,canActivate: [AuthGuard]},
   { path: 'owner/:user_id/messages', component: OwnerMessagesComponent ,canActivate: [AuthGuard]}
 ];
 

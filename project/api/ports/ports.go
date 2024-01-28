@@ -77,6 +77,7 @@ type Db interface {
 	UpdatePetWeight(pet *domain.Pet) error
 	GetNumberOfCats() (int, error)
 	GetNumberOfDogs() (int, error)
+	GetPetsByOwner(owner *domain.Owner) ([]domain.Pet, error)
 
 	SaveBooking(booking *domain.Booking) error
 	GetBooking(booking *domain.Booking) error

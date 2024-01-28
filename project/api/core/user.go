@@ -45,7 +45,34 @@ func (srv *Service) GetOwner(user *domain.Owner) *domain.Owner {
 
 func (srv *Service) DeleteOwner(user *domain.Owner) *domain.Response {
 	resp := &domain.Response{}
-	err := srv.db.DeleteOwner(user)
+	bookings := []domain.Booking{}
+	bookings, err := srv.db.GetBookingsByOwner(user)
+	if err != nil {
+		resp.StatusCode = 400
+		resp.Message = fmt.Sprintf("Couldnt get bookings : %v", err)
+		return resp
+	}
+	for _, booking := range bookings {
+		err := srv.db.DeleteBooking(&booking)
+		if err != nil {
+			resp.StatusCode = 400
+			resp.Message = fmt.Sprintf("Couldnt delete booking : %v", err)
+			return resp
+		}
+	}
+
+	pets := []domain.Pet{}
+	pets, _ = srv.db.GetPetsByOwner(user)
+	for _, pet := range pets {
+		err := srv.db.DeletePet(&pet)
+		if err != nil {
+			resp.StatusCode = 400
+			resp.Message = fmt.Sprintf("Couldnt delete pet : %v", err)
+			return resp
+		}
+	}
+
+	err = srv.db.DeleteOwner(user)
 	if err != nil {
 		resp.StatusCode = 400
 		resp.Message = fmt.Sprintf("Couldnt delete USER : %v", err)
@@ -145,7 +172,24 @@ func (srv *Service) GetKeeper(user *domain.Keeper) *domain.Keeper {
 
 func (srv *Service) DeleteKeeper(user *domain.Keeper) *domain.Response {
 	resp := &domain.Response{}
-	err := srv.db.DeleteKeeper(user)
+	bookings := []domain.Booking{}
+	bookings, err := srv.db.GetBookingsByKeeperId(user.Id)
+	if err != nil {
+		resp.StatusCode = 400
+		resp.Message = fmt.Sprintf("Couldnt get bookings : %v", err)
+		return resp
+	}
+	fmt.Println("BOOKINGS", bookings)
+	for _, booking := range bookings {
+		err := srv.db.DeleteBooking(&booking)
+		if err != nil {
+			resp.StatusCode = 400
+			resp.Message = fmt.Sprintf("Couldnt delete booking : %v", err)
+			return resp
+		}
+	}
+
+	err = srv.db.DeleteKeeper(user)
 	if err != nil {
 		resp.StatusCode = 400
 		resp.Message = fmt.Sprintf("Couldnt delete USER : %v", err)

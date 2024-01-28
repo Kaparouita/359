@@ -18,6 +18,10 @@ export class UserServiceService {
     return this.http.post<User>(`http://127.0.0.1:3000/users/owners/`, params);
   }
 
+  deleteOwner(id: number) {
+    return this.http.delete(`http://127.0.0.1:3000/users/owners/` + id);
+  }
+
   addPet(params: Pet){
     return this.http.post<Pet>(`http://127.0.0.1:3000/pets/`, params);
   }

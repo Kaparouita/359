@@ -58,8 +58,7 @@ import { OwnerMessagesComponent } from './main-container/owner-messages/owner-me
     OwnerFindKeepersComponent,
     OwnerBookingsComponent,
     KeepersReviewComponent,
-    OwnerReviewComponent,
-    OwnerMessagesComponent
+    OwnerMessagesComponent,
   ],
   imports: [
     BrowserModule,

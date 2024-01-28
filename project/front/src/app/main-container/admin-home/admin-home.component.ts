@@ -16,14 +16,22 @@ interface Column {
 export class AdminHomeComponent {
 
   constructor(private userService : UserServiceService) {}
-  keepers: User[] = []; 
+  users: User[] = []; 
 
   ngOnInit(): void {
     this.userService.getKeepers().subscribe(
       (data) => {
         console.log(data);
-        this.keepers = data;
-        
+        this.users = data;
+        this.userService.getOwners().subscribe(
+          (data) => {
+            console.log(data);
+            this.users = this.users.concat(data);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
       },
       (error) => {
         console.log(error);
@@ -33,14 +41,27 @@ export class AdminHomeComponent {
     
   }
 
-  deleteKeeper(keeperId: number): void {
-    this.userService.DeleteKeeper(keeperId).subscribe(
-      () => {
-        this.keepers = this.keepers.filter(keeper => keeper.id !== keeperId);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+  deleteUser(user : User){
+    if (user.user_type === "owner"){
+      this.userService.deleteOwner(user.id).subscribe(
+        (data) => {
+          console.log(data);
+          this.users.splice(this.users.indexOf(user),1);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }else if (user.user_type === "keeper"){
+      this.userService.DeleteKeeper(user.id).subscribe(
+        (data) => {
+          console.log(data);
+          this.users.splice(this.users.indexOf(user),1);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   }
 }

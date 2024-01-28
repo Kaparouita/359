@@ -30,8 +30,6 @@ func (srv *Service) CreateBooking(booking *domain.Booking) *domain.Booking {
 }
 
 func (srv *Service) UpdateBooking(booking *domain.Booking) *domain.Booking {
-	fmt.Println("MAOU : ", booking.Id)
-
 	err := srv.db.UpdateBooking(booking)
 	if err != nil {
 		booking.StatusCode = 400
