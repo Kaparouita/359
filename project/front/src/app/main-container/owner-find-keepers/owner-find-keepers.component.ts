@@ -47,7 +47,6 @@ export class OwnerFindKeepersComponent {
       this.userService.getAvailableKeepers(parseInt(userId || '0', 10)).subscribe(
         data => {
           this.keepers = data; 
-          console.log(this.keepers);
         },
         error => {
           console.error('Error fetching owner data', error);
@@ -94,7 +93,6 @@ export class OwnerFindKeepersComponent {
         this.userService.getOrderedKeepers(this.userId,this.selectedOrder).subscribe(
           data => {
             this.keepers = data; 
-            console.log(this.keepers);
           },
           error => {
             console.error('Error fetching owner data', error);

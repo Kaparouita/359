@@ -100,18 +100,27 @@ func (srv *Service) AvailableKeepers(id int) ([]domain.Keeper, error) {
 		owner.Message = fmt.Sprintf("Couldnt get USER : %v", err)
 		return nil, err
 	}
-	fmt.Println(owner)
 	if len(owner.Pets) == 0 {
 		owner.StatusCode = 400
 		owner.Message = fmt.Sprintf("Owner has no pets")
 		return nil, err
 	}
-	fmt.Println(petTypesOwned(owner.Pets))
 	users, err := srv.db.AvailableKeepers(petTypesOwned(owner.Pets))
 	if err != nil {
 		return nil, err
 	}
-	return users, nil
+
+	// Trim users from duplicate IDs
+	uniqueUsers := make([]domain.Keeper, 0, len(users))
+	seen := make(map[uint]bool)
+	for _, user := range users {
+		if !seen[user.Id] {
+			uniqueUsers = append(uniqueUsers, user)
+			seen[user.Id] = true
+		}
+	}
+
+	return uniqueUsers, nil
 }
 
 func petTypesOwned(pets []domain.Pet) []string {
