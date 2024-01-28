@@ -280,3 +280,29 @@ func (handler *Handler) GetReviewsByKeeper(c *fiber.Ctx) error {
 
 	return c.Status(200).JSON(reviews)
 }
+
+func (handler *Handler) GetBookingsNumberByKeeperId(c *fiber.Ctx) error {
+	id, err := c.ParamsInt("id") // keeper id
+	if err != nil {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+	bookingsNumber, err := handler.Srv.GetBookingsNumberByKeeperId(id)
+	if err != nil {
+		return c.Status(404).JSON(fmt.Sprintf("Unable to retrieve bookings number: %v", err))
+	}
+
+	return c.Status(200).JSON(bookingsNumber)
+}
+
+func (handler *Handler) GetPetKeepersDays(c *fiber.Ctx) error {
+	id, err := c.ParamsInt("id") // keeper id
+	if err != nil {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+	keepingDays, err := handler.Srv.GetPetKeepersDays(id)
+	if err != nil {
+		return c.Status(404).JSON(fmt.Sprintf("Unable to retrieve pet keeping days: %v", err))
+	}
+
+	return c.Status(200).JSON(keepingDays)
+}

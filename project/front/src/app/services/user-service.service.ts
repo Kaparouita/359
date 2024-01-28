@@ -101,5 +101,12 @@ export class UserServiceService {
     return this.http.post<Review>(`http:////127.0.0.1:3000/reviews/` ,review);
   }
 
+  GetPetKeepersDays(id: number) {
+    return this.http.get<any>(`http:////127.0.0.1:3000/users/keepers/` + id + `/bookingsNumber`);
+  }
+
+  GetPetKeepersBookings(id: number) {
+    return this.http.get<any>(`http:////127.0.0.1:3000/users/keepers/` + id + `/petKeepersDays`);
+  }
 
 }

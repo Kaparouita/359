@@ -6,6 +6,14 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { DatePipe } from '@angular/common';
 
+interface Days{
+  days: number;
+}
+
+interface Bookings{
+  bookings: number;
+}
+
 @Component({
   selector: 'app-keepers-review',
   templateUrl: './keepers-review.component.html',
@@ -16,6 +24,8 @@ export class KeepersReviewComponent {
   user = new User();
   owners : User[] = [];
   reviews : any;
+  days: Days = {days: 0};
+  bookings: Bookings = {bookings: 0};
   constructor( private authService : AuthService,private userService : UserServiceService,private route: ActivatedRoute, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
@@ -25,6 +35,26 @@ export class KeepersReviewComponent {
       this.userService.GetReviewsByKeeper(parseInt(userId || '0', 10)).subscribe(
         data => {
           this.reviews = data; // Assign the emitted value to user
+          console.log(data);
+        },
+        error => {
+          console.error('Error fetching keeper data', error);
+        }
+      );
+
+      this.userService.GetPetKeepersDays(parseInt(userId || '0', 10)).subscribe(
+        data => {
+          this.days = data; // Assign the emitted value to user
+          console.log(data);
+        },
+        error => {
+          console.error('Error fetching keeper data', error);
+        }
+      );
+
+      this.userService.GetPetKeepersBookings(parseInt(userId || '0', 10)).subscribe(
+        data => {
+          this.bookings = data; // Assign the emitted value to user
           console.log(data);
         },
         error => {
