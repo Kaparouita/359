@@ -86,3 +86,31 @@ func (srv *Service) GetMoney() ([]int, error) {
 
 	return money, nil
 }
+
+func (srv *Service) GetBookingsNumberByKeeperId(userId int) (int, error) {
+	num := 0
+	bookings, err := srv.db.GetBookingsByKeeperId(uint(userId))
+	if err != nil {
+		return 0, err
+	}
+	for _, booking := range bookings {
+		if booking.Status == "finished" {
+			num++
+		}
+	}
+	return num, nil
+}
+
+func (srv *Service) GetPetKeepersDays(userId int) (int, error) {
+	days := 0
+	bookings, err := srv.db.GetBookingsByKeeperId(uint(userId))
+	if err != nil {
+		return 0, err
+	}
+	for _, booking := range bookings {
+		if booking.Status == "finished" {
+			days += booking.EndDate.Day() - booking.StartDate.Day()
+		}
+	}
+	return days, nil
+}

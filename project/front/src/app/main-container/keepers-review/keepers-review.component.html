@@ -5,6 +5,9 @@
 </head>
 <body>
 <div class="home">
+    <div class="flex-item">
+        <p>Total Bookings: {{ bookings }}        </p>
+        <p>Total days of petkeeping: {{ days }}          </p>
     <div class="card">
         <p-table [value]="reviews" [tableStyle]="{'min-width': '60rem'}">
             <ng-template pTemplate="caption">
@@ -28,6 +31,6 @@
             </ng-template>
         </p-table>
     </div>
-    
+    </div>
 </div>
 </body>

@@ -51,6 +51,8 @@ func (server *Server) Initialize() {
 	keepers.Delete("/:id", server.handler.DeleteKeeper)
 	keepers.Get("/:id/bookings", server.handler.GetBookingsByKeeperId)
 	keepers.Get("/:id/reviews", server.handler.GetReviewsByKeeper)
+	keepers.Get("/:id/bookingsNumber", server.handler.GetBookingsNumberByKeeperId)
+	keepers.Get("/:id/petKeepersDays", server.handler.GetPetKeepersDays)
 
 	pets := app.Group("/pets")
 	pets.Get("/", server.handler.GetPets)

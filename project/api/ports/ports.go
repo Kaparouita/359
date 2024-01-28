@@ -40,6 +40,8 @@ type Service interface {
 	DeleteBooking(booking *domain.Booking) *domain.Response
 	GetBookingsByOwner(owner *domain.Owner) ([]domain.Booking, error)
 	GetBookingsByKeeperId(keeperId int) ([]domain.Booking, error)
+	GetBookingsNumberByKeeperId(keeperId int) (int, error)
+	GetPetKeepersDays(keeperId int) (int, error)
 
 	CreateMessage(message *domain.Message) *domain.Message
 	GetMessagesByUsername(username string) ([]domain.Message, error)
@@ -132,6 +134,8 @@ type Handler interface {
 	DeleteBooking(c *fiber.Ctx) error
 	GetBookingsByOwner(c *fiber.Ctx) error
 	GetBookingsByKeeperId(c *fiber.Ctx) error
+	GetBookingsNumberByKeeperId(c *fiber.Ctx) error
+	GetPetKeepersDays(c *fiber.Ctx) error
 
 	GetAdmin(c *fiber.Ctx) error
 	GetNumberOfCatsAndDogs(c *fiber.Ctx) error
