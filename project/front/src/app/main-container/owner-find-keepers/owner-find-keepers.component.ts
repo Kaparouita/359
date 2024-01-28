@@ -94,7 +94,6 @@ export class OwnerFindKeepersComponent {
         this.userService.getOrderedKeepers(this.userId,this.selectedOrder).subscribe(
           data => {
             this.keepers = data; 
-            console.log(this.keepers);
           },
           error => {
             console.error('Error fetching owner data', error);
@@ -173,7 +172,6 @@ export class OwnerFindKeepersComponent {
     this.userService.createBooking(book).subscribe(
       data => {
         alert('Booking successful');
-        console.log(data);
         this.visible = false;
       },
       error => {

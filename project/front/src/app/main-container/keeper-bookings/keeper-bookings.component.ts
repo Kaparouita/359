@@ -109,7 +109,7 @@ export class KeeperBookingsComponent {
     for (const pet of owner?.pets|| []) {
       console.log(pet);
       if (pet.id === id) {
-        
+        console.log(pet.type);
         return pet.type;
       }
     }
